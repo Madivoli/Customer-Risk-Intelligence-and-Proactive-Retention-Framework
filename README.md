@@ -230,12 +230,14 @@ o **Female:** 50
 1. Can we build a model to predict the probability of default for a new applicant based on their profile?
 
 Step 1. Grouping ages into logical, non-discriminatory bins
-		age_bins = [18, 25, 35, 50, 65, 100]
-		age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
-		risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
+		
+  	age_bins = [18, 25, 35, 50, 65, 100]
+	age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
+	risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
 
 Step 2. Training a model to Predict Loan Defaulters
-	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
+	
+ 	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
 	X = risk_analysis[feature_columns]
 	y = risk_analysis['Defaulted']
 
@@ -271,6 +273,15 @@ Step 2. Training a model to Predict Loan Defaulters
 	plt.title('Top 10 Features for Predicting Default')
 	plt.tight_layout()
 	plt.show()
+
+
+
+
+
+
+
+
+
 
 The age group of **26-35 years (22.6% importance) is the strongest predictor of default risk**. Customers in this category are at the highest risk, which may be due to factors such as **financial instability**, **being new credit users**, or **having lower income levels**. 
 
