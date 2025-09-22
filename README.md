@@ -550,30 +550,30 @@ Customers with **previous defaults are more likely to churn**. This could indica
 - Using a CTE to calculate the loan amount based on income brackets and credit score tiers
 
 	WITH median_calc AS (
-    SELECT 
-        t.Income_Bracket,
-        t.Credit_Score_Tiers,
-        AVG(t.Loan_Amount) as median_loan_amount
-    FROM (
+    	SELECT 
+        	t.Income_Bracket,
+        	t.Credit_Score_Tiers,
+        	AVG(t.Loan_Amount) as median_loan_amount
+    	FROM (
         SELECT 
             Income_Bracket,
             Credit_Score_Tiers,
             Loan_Amount,
             COUNT(*) OVER (PARTITION BY Income_Bracket, Credit_Score_Tiers) as group_count,
             ROW_NUMBER() OVER (PARTITION BY Income_Bracket, Credit_Score_Tiers ORDER BY Loan_Amount) as row_num
-        FROM raw_dataset_cleaned
+       	FROM raw_dataset_cleaned
         WHERE Loan_Amount IS NOT NULL
-    ) t
-    WHERE row_num BETWEEN group_count/2.0 AND group_count/2.0 + 1
-    GROUP BY Income_Bracket, Credit_Score_Tiers
-	),
-	mode_calc AS (
-    SELECT 
-        Income_Bracket,
-        Credit_Score_Tiers,
-        Loan_Amount as mode_loan_amount
-    FROM (
-        SELECT 
+   		 ) t
+    	WHERE row_num BETWEEN group_count/2.0 AND group_count/2.0 + 1
+    	GROUP BY Income_Bracket, Credit_Score_Tiers
+		),
+		mode_calc AS (
+    	SELECT 
+        	Income_Bracket,
+        	Credit_Score_Tiers,
+        	Loan_Amount as mode_loan_amount
+    	FROM (
+       	SELECT 
             Income_Bracket,
             Credit_Score_Tiers,
             Loan_Amount,
@@ -582,42 +582,42 @@ Customers with **previous defaults are more likely to churn**. This could indica
         FROM raw_dataset_cleaned
         WHERE Loan_Amount IS NOT NULL
         GROUP BY Income_Bracket, Credit_Score_Tiers, Loan_Amount
-    ) freq_table
-    WHERE rn = 1
-	)
-	SELECT 
-    	t.Income_Bracket,
-    	t.Credit_Score_Tiers,
-    	COUNT(t.Loan_Amount) as loan_count,
-    	ROUND(AVG(t.Loan_Amount), 2) as mean_loan_amount,
-    	MAX(mc.median_loan_amount) as median_loan_amount,  -- Using MAX() aggregate function
-    	MAX(moc.mode_loan_amount) as mode_loan_amount,     -- Using MAX() aggregate function
-    	MIN(t.Loan_Amount) as min_loan_amount,
-    	MAX(t.Loan_Amount) as max_loan_amount,
-    	ROUND(STDDEV(t.Loan_Amount), 2) as std_dev_loan_amount
-	FROM raw_dataset_cleaned as t
-	LEFT JOIN median_calc mc ON t.Income_Bracket = mc.Income_Bracket 
+    	) freq_table
+    	WHERE rn = 1
+		)
+		SELECT 
+    		t.Income_Bracket,
+    		t.Credit_Score_Tiers,
+    		COUNT(t.Loan_Amount) as loan_count,
+    		ROUND(AVG(t.Loan_Amount), 2) as mean_loan_amount,
+    		MAX(mc.median_loan_amount) as median_loan_amount,  -- Using MAX() aggregate function
+    		MAX(moc.mode_loan_amount) as mode_loan_amount,     -- Using MAX() aggregate function
+    		MIN(t.Loan_Amount) as min_loan_amount,
+    		MAX(t.Loan_Amount) as max_loan_amount,
+    		ROUND(STDDEV(t.Loan_Amount), 2) as std_dev_loan_amount
+		FROM raw_dataset_cleaned as t
+		LEFT JOIN median_calc mc ON t.Income_Bracket = mc.Income_Bracket 
                         AND t.Credit_Score_Tiers = mc.Credit_Score_Tiers
-	LEFT JOIN mode_calc moc ON t.Income_Bracket = moc.Income_Bracket 
+		LEFT JOIN mode_calc moc ON t.Income_Bracket = moc.Income_Bracket 
                         AND t.Credit_Score_Tiers = moc.Credit_Score_Tiers
-	WHERE t.Loan_Amount IS NOT NULL
-	GROUP BY t.Income_Bracket, t.Credit_Score_Tiers
-	ORDER BY 
-    CASE t.Income_Bracket
-        WHEN '$0-50k' THEN 1
-        WHEN '$50k-75k' THEN 2
-        WHEN '$75k-100k' THEN 3
-        WHEN '$100k+' THEN 4
-        ELSE 5
-    END,
-    CASE t.Credit_Score_Tiers
-        WHEN 'Poor' THEN 1
-        WHEN 'Fair' THEN 2
-        WHEN 'Good' THEN 3
-        WHEN 'Very Good' THEN 4
-        WHEN 'Excellent' THEN 5
-        ELSE 6
-    END;
+		WHERE t.Loan_Amount IS NOT NULL
+		GROUP BY t.Income_Bracket, t.Credit_Score_Tiers
+		ORDER BY 
+    		CASE t.Income_Bracket
+        		WHEN '$0-50k' THEN 1
+        		WHEN '$50k-75k' THEN 2
+        		WHEN '$75k-100k' THEN 3
+        		WHEN '$100k+' THEN 4
+  			ELSE 5
+    		END,
+   		 	CASE t.Credit_Score_Tiers
+        		WHEN 'Poor' THEN 1
+        		WHEN 'Fair' THEN 2
+        		WHEN 'Good' THEN 3
+        		WHEN 'Very Good' THEN 4
+        		WHEN 'Excellent' THEN 5
+        	ELSE 6
+    		END;
 
 	<img width="940" height="841" alt="image" src="https://github.com/user-attachments/assets/b52b9868-24e2-4cd0-b39f-01cc82885035" />
 
