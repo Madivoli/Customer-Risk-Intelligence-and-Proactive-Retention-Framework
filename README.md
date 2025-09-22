@@ -96,21 +96,22 @@ The analysis focused on understanding the distribution of the dataset and identi
 # Results 
 The Total number of customers was **500**. The company has a small, manageable customer base that can be analysed to identify and fix problems. 
 
+The average income is **$84,398.06**. The customer base is not low-income, indicating that **affordability** is not the core issue.
 
-**Metric**	                    **Figure**	                **Interpretation**
+The average loan size is **$28,456.94**. The company is issuing substantial loans.
 
-Total Customers	                **500**	                    The company has a small, manageable customer base that can be analyzed to identify and fix problems.
+The loan size is **$14,228,468.00**. This is the total capital exposed to **credit risk**; it is extremely high.
 
-Average Income	                **$84,398.06**	            The customer base is not low-income, indicating that affordability is not the core issue.
+The total marketing spend is **$5,279,064.00**.	Spending $5.3 million to acquire 500 customers results in a **Customer Acquisition Cost (CAC)** of approximately **$10,558 per customer**, which is **not sustainable**.
 
-Average Loan Size	            **$28,456.94**              The company is issuing substantial loans.
+Total Revenue is **$27,189,477.00**. Without knowing **the cost of capital**, the significance of this number is meaningless. However, with a **default rate of 97.4%**, the revenue generated is **almost entirely wiped out by losses**.
 
-Loan Size	14,228,468.00	The total capital exposed to credit risk is extremely high.
-Total Marketing Spend	5,279,064.00	Spending $5.3 million to acquire 500 customers results in a Customer Acquisition Cost (CAC) of approximately $10,558 per customer, which is not sustainable.
-Total Revenue	27,189,477.00	Without knowing the cost of capital, the significance of this number is meaningless. With a default rate of 97.4%, the revenue generated is almost entirely wiped out by losses.
-Total Defaults	487	The situation is catastrophic, as only 13 out of 500 customers are servicing their loans.
-Default Rate %	97.4	Extremely high. An acceptable default rate for lending in Kenya ranges between 16% and 40%, meaning the business is currently losing money.
-Total Churns	127	Many of the few customers who are not defaulting are still leaving.
-Churn Rate %	25.4	A high churn rate that suggests poor customer satisfaction or that successful customers are finding better options elsewhere.
+Total defaults	are **487**. The situation is **catastrophic**, **as only 13 out of 500 customers are servicing their loans**.
+
+Default rate percentage is	**97.4**. This is extremely high. An acceptable default rate for lending in Kenya ranges **between 16% and 40%**, meaning the **business is currently losing money**.
+
+Total churn is **127 customers**. Many of the few customers who are not defaulting are still leaving.
+
+Churn Rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
 
     
