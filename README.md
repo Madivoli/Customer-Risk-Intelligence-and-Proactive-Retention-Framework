@@ -140,8 +140,11 @@ Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfactio
 # Results
 
 The top 3 customers with the highest loan default are:
+
 o **Customer ID 159:** $48,668 
+
 o **Customer ID 398:** $48,590
+
 o **Customer ID 322:** $48,285
 
 3. Identifying the top 3 churners by gender and age group
@@ -196,8 +199,11 @@ o **Customer ID 322:** $48,285
 # Results
 
 The top 3 churners by age group were:
+
 o **56-65:** 29
+
 o **46-55:** 26
+
 o **18-25:** 26
 
 - Top chuner by gender
@@ -213,7 +219,9 @@ o **18-25:** 26
 # Results
 
 The top churner by gender is:
+
 o **Male:** 77
+
 o **Female:** 50
 
 
