@@ -208,7 +208,8 @@ o **18-25:** 26
 
 
 - Top chuner by gender:
-        SELECT 
+
+  		SELECT 
 	        Gender,
             COUNT(Customer_Churn) AS churn_by_gender
         FROM raw_dataset_cleaned 
