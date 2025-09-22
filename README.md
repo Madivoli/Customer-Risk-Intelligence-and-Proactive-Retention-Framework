@@ -198,7 +198,7 @@ o **Customer ID 322:** $48,285
 
 # Results
 
-The top 3 churners by age group were:
+The top 3 churners by age group:
 
 o **56-65:** 29
 
@@ -206,8 +206,8 @@ o **46-55:** 26
 
 o **18-25:** 26
 
-- Top chuner by gender
 
+- Top chuner by gender:
         SELECT 
 	        Gender,
             COUNT(Customer_Churn) AS churn_by_gender
