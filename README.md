@@ -235,7 +235,7 @@ Step 1. Grouping ages into logical, non-discriminatory bins
 	age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
 	risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
 
-Step 2. Training a model to Predict Loan Defaulters
+Step 2. Training our model to Predict Loan Defaulters
 	
  	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
 	X = risk_analysis[feature_columns]
@@ -253,7 +253,59 @@ Step 2. Training a model to Predict Loan Defaulters
 	print("Testing target shape:", y_test.shape)
 	print("\nFirst few rows of X_train:")
 	print(X_train.head())
-  
+
+
+Step 3. Choosing our model (in this case, a LogisticRegression)
+
+	from sklearn.linear_model import LogisticRegression
+
+Step 4. Creating the model
+
+	model = LogisticRegression(random_state=42, max_iter=1000)
+
+Step 5. Training the model on the STUDY GROUP (the training data)
+
+	model.fit(X_train, y_train)
+
+Step 6. Observing how well our model performs on the EXAM (the testing data)
+
+	accuracy = model.score(X_test, y_test)
+	print(f"Model Accuracy: {accuracy:.2%}") 
+
+**Results:** Our model's accuracy is 82%, this means that it is correctly predicting whether a customer will default or not 82 times out of 100 on unseen data.
+
+Step 7. Creating the model with class weights
+	model = LogisticRegression(random_state=42, max_iter=1000, 
+                          class_weight='balanced')  # This tells the model to automatically balance classes
+
+Step 8. Retrain the model
+	model.fit(X_train, y_train)
+
+Step 10. Make new predictions
+	y_pred = model.predict(X_test)
+
+Step 11. Check the new predictions
+	print("New predicted class distribution:")
+	print(pd.Series(y_pred).value_counts())
+
+
+Step 12. Logistic Regression model with XGBoost Classifier
+
+	from xgboost import XGBClassifier
+
+	xgb_model = XGBClassifier(
+    	random_state=42,
+    	scale_pos_weight=(len(y_train) - sum(y_train)) / sum(y_train),  
+    	eval_metric='logloss',
+    	use_label_encoder=False
+		)
+	xgb_model.fit(X_train, y_train)
+
+	y_pred_xgb = xgb_model.predict(X_test)
+	print("XGBoost Classification Report:")
+	print(classification_report(y_test, y_pred_xgb))
+
+**Results:** Our Logistic Regression model's accuracy is 72%, this means that it is correctly predicting whether a customer will default or not 72 times out of 100 on unseen data.
 
 2. What are the key factors that correlate with a customer defaulting on a loan?
 
