@@ -549,8 +549,7 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 - Using a CTE to calculate the loan amount based on income brackets and credit score tiers
 
-	WITH median_calc AS (
-
+		WITH median_calc AS (
     	SELECT
           	t.Income_Bracket,
         	t.Credit_Score_Tiers,
