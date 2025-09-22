@@ -394,22 +394,22 @@ Common reasons for high churn rates include: **Competitive pressure**, **Poor cu
 
 •	Usage pattern analysis
 
-2.	Develop targeted retention programs for high-risk segments
+2. Develop targeted retention programs for high-risk segments
 
 - Comparing churn rates across various age groups
   
-	segment_churn = risk_analysis.groupby('Age_Group', observed=True)['Customer_Churn'].mean().sort_values(ascending=False) * 100
+		segment_churn = risk_analysis.groupby('Age_Group', observed=True)['Customer_Churn'].mean().sort_values(ascending=False) * 100
 
-	print("Churn Rate by Age Group:")
-	print(segment_churn)
+		print("Churn Rate by Age Group:")
+		print(segment_churn)
 
-	plt.figure(figsize=(10,6))
-	segment_churn.plot(kind='bar')
-	plt.title('Churn Rate by Age Group')
-	plt.ylabel('Churn Rate (%)')
-	plt.xticks(rotation=45)
-	plt.tight_layout()
-	plt.show()
+		plt.figure(figsize=(10,6))
+		segment_churn.plot(kind='bar')
+		plt.title('Churn Rate by Age Group')
+		plt.ylabel('Churn Rate (%)')
+		plt.xticks(rotation=45)
+		plt.tight_layout()
+		plt.show()
 
 	<img width="940" height="560" alt="image" src="https://github.com/user-attachments/assets/75c9b1af-99ae-40a2-8401-be935a179b3f" />
 
