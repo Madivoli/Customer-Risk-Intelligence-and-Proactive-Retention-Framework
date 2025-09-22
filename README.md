@@ -40,6 +40,7 @@ Question: How does spending behaviour (spending score) relate to income and cred
 •	SQL: To query the database and prepare specific datasets for analysis.
 
 •	Python (Pandas, Scikit-learn, Seaborn): The primary tool for deep analysis.
+
     o	Pandas: For robust data cleaning and manipulation.
     
     o	Seaborn/Matplotlib: For creating visualisations like boxplots (Income by Default status) and correlation heatmaps.
@@ -53,6 +54,9 @@ The data cleaning process involved the following process
 
 1. Identifying and handling missing values
 
+        import pandas as pd
+        risk_analysis = pd.read_csv(r"C:\Users\hp\OneDrive\Projects\Victoria Solutions\raw_dataset_week4.csv")
+        risk_analysis
         print(risk_analysis.isnull().sum())
 
 
