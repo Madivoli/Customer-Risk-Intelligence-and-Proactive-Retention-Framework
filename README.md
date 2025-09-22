@@ -623,12 +623,17 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 Key insights and interpretations regarding loan amounts based on income brackets and credit score tiers:
 
-1.	**Borrowers with very good credit generally receive higher loan amounts across most income brackets**. For example, customers in the $0–50k income bracket received an average loan amount of $29,809.60. 
-2.	**Poor credit borrowers consistently receive lower loan amounts**, regardless of their income level.
-3.	**Higher income does not always correlate with higher loan amounts**. Interestingly, some **lower-income brackets sometimes have higher average loan amounts than higher-income** brackets within the same credit tier.
-4.	The **$75k–100k income bracket exhibits the most variability in lending patterns** across different credit tiers.
-5.	**Data Quality Issues:** Several entries show minimum values higher than maximum values (e.g., $0–50k/Poor: min 10,688 > max 9,795), indicating potential data errors.
-6.	**Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
+•	**Borrowers with very good credit generally receive higher loan amounts across most income brackets**. For example, customers in the $0–50k income bracket received an average loan amount of $29,809.60. 
+
+•	**Poor credit borrowers consistently receive lower loan amounts**, regardless of their income level.
+
+•	**Higher income does not always correlate with higher loan amounts**. Interestingly, some **lower-income brackets sometimes have higher average loan amounts than higher-income** brackets within the same credit tier.
+
+•	The **$75k–100k income bracket exhibits the most variability in lending patterns** across different credit tiers.
+
+•	**Data Quality Issues:** Several entries show minimum values higher than maximum values (e.g., $0–50k/Poor: min 10,688 > max 9,795), indicating potential data errors.
+
+•	**Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
 
 
 2. How does spending behaviour (spending score) relate to income and creditworthiness?
