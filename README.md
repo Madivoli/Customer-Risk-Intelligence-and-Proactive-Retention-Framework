@@ -644,6 +644,7 @@ Key insights and interpretations regarding loan amounts based on income brackets
 	<img width="880" height="66" alt="image" src="https://github.com/user-attachments/assets/da662135-510f-44f0-a082-d0fc7dff3f93" />
 
 The multiple linear regression (MLR) model is:
+
 	Spending Behaviour = 50.1481 + (-4.7341 * Income) + (8.2135 * Credit Score)
 
 A **moderate negative correlation exists between income and spending (borrowing) behaviour**. Thus, for each additional increase in income, customer borrowing behaviour decreases by 4.7341 units, assuming the credit score remains constant. This indicates that **a rise in income does not necessarily lead to an increase in client borrowing**.
