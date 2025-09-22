@@ -26,11 +26,13 @@ Question: How does marketing spend correlate with purchase frequency or new loan
 Question: What is the typical loan amount granted based on income and credit score?
 Question: How does spending behaviour (spending score) relate to income and creditworthiness?
 
+
 # Methods
 1.	Descriptive Analytics: Summarising key metrics (average loan size, default rate, churn rate). 
 2.	Correlation Analysis: Identifying relationships between variables (e.g., Income vs. Loan Amount, Credit Score vs. Defaulted).
 3.	Predictive Modelling: Using historical data to predict future outcomes (e.g., Logistic Regression to predict Defaulted or Customer Churn). 
 4.	Clustering: Using algorithms like K-Means to segment customers into distinct groups based on multiple characteristics.
+
 
 # Tools and their purpose 
 •	Excel: Initial data exploration, using filters and pivot tables to get a quick sense of distribution (e.g., average income of defaulters vs. non-defaulters).
@@ -39,8 +41,11 @@ Question: How does spending behaviour (spending score) relate to income and cred
 
 •	Python (Pandas, Scikit-learn, Seaborn): The primary tool for deep analysis.
     o	Pandas: For robust data cleaning and manipulation.
+    
     o	Seaborn/Matplotlib: For creating visualisations like boxplots (Income by Default status) and correlation heatmaps.
+    
     o	Scikit-learn: To build a classification model to predict default using features like Age, Income, Credit Score, and Previous Defaults.
+
 
 
 # DATA PROCESSING, CLEANING AND MANIPULATION
