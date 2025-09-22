@@ -93,4 +93,8 @@ The analysis focused on understanding the distribution of the dataset and identi
     FROM
         raw_dataset_cleaned;
         
+# Results 
+# Total Customers number of customers were 500. The company has a small, manageable customer base that can be analyzed to identify and fix problems. 
 
+
+    
