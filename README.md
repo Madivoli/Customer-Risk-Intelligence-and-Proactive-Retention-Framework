@@ -348,5 +348,87 @@ o **Female:** 50
 
 2. Why are customers leaving? What patterns distinguish customers who churn from those who stay?
 
+- Checking the overall churn rate
+  
+		import pandas as pd
+		import numpy as np
+		import matplotlib.pyplot as plt
+		import seaborn as sns
+
+		churn_rate = df['churn'].mean() * 100
+		print(f"Overall Churn Rate: {churn_rate:.2f}%")
+
+		plt.figure(figsize=(6,4))
+		sns.countplot(x='churn', data=df)
+		plt.title('Customer Churn Distribution')
+		plt.show()
+
+		for p in ax.patches:
+   			 ax.annotate(f'{p.get_height():.0f}', 
+                (p.get_x() + p.get_width() / 2., p.get_height()), 
+                ha='center', va='bottom', 
+                xytext=(0, 5), 
+                textcoords='offset points',
+                fontsize=12)
+
+		plt.show()
+
+	<img width="940" height="402" alt="image" src="https://github.com/user-attachments/assets/02bd2fa8-7704-4f0c-b227-637fc7963998" />
+
+The churn rate is **25.40%**, which means that **25% (n = 127) of the customers have left**. Approximately 373 customers remained with the company. 
+
+A churn rate of 25.4% indicates that 1 in 4 customers are leaving, **representing a significant risk to revenue**. 
+
+This level of churn highlights an urgent need for effective retention strategies. 
+
+Common reasons for high churn rates include: **Competitive pressure**, **Poor customer experience**, **Pricing issues**, and **Products or services not meeting customer expectations**
+
+
+**Recommendations:**
+
+1. Investigate primary reasons for churn through:
+   
+•	Exit interviews
+
+•	Customer satisfaction surveys
+
+•	Usage pattern analysis
+
+2.	Develop targeted retention programs for high-risk segments
+
+- Comparing churn rates across various age groups
+  
+	segment_churn = risk_analysis.groupby('Age_Group', observed=True)['Customer_Churn'].mean().sort_values(ascending=False) * 100
+
+	print("Churn Rate by Age Group:")
+	print(segment_churn)
+
+	plt.figure(figsize=(10,6))
+	segment_churn.plot(kind='bar')
+	plt.title('Churn Rate by Age Group')
+	plt.ylabel('Churn Rate (%)')
+	plt.xticks(rotation=45)
+	plt.tight_layout()
+	plt.show()
+
+	<img width="940" height="560" alt="image" src="https://github.com/user-attachments/assets/75c9b1af-99ae-40a2-8401-be935a179b3f" />
+
+Age_Group:
+
+	18-25    30.434783
+	51-65    27.083333
+	36-50    25.000000
+	66+      21.428571
+	26-35    17.808219
+	Name: Customer_Churn, dtype: float64
+
+**Results:**
+
+Young customers, particularly those **aged 18 to 25, are the most likely to leave**. This trend can be attributed to several factors, including **financial instability**, **a desire to explore different options**, **a lack of loyalty**, and s**ignificant life transitions such as college or starting their first job**. 
+
+In contrast, t**he most loyal customers tend to be in the age group of 26 to 35 years**. This loyalty is often related to **career stability**, **established banking relationships**, and **family financial responsibilities**. 
+
+Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low churn rate of 21%**. They are **generally more stable in their banking choices**, as **they are less likely to switch providers**and **often adhere to more traditional banking habits**.
+
 
 
