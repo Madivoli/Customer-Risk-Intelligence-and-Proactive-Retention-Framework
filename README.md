@@ -431,4 +431,49 @@ In contrast, t**he most loyal customers tend to be in the age group of 26 to 35 
 Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low churn rate of 21%**. They are **generally more stable in their banking choices**, as **they are less likely to switch providers**and **often adhere to more traditional banking habits**.
 
 
+3. Is there a relationship between loan approval amounts, credit score, and customer churn?
 
+- Analyzing Churn by Numerical Features (e.g., Income, Loan Amount, Credit Score)
+  
+		numerical_features = risk_analysis[['Income', 'Loan_Amount', 'Credit_Score', 'Age', Previous_Defaults']]
+
+		fig, axes = plt.subplots(2, 3, figsize=(15, 10)) 
+		axes = axes.flat
+
+		for i, col in enumerate(numerical_features):
+    	if col in risk_analysis.columns:
+       	 	sns.boxplot(x='Customer_Churn', y=col, data= risk_analysis, ax=axes[i])
+        	axes[i].set_title(f'Churn vs. {col.title()}')
+
+		for j in range(i+1, len(axes)):
+    	axes[j].set_visible(False)
+
+		plt.tight_layout()
+		plt.show()
+
+	<img width="940" height="313" alt="image" src="https://github.com/user-attachments/assets/45cbb675-1885-4ad2-a2a4-a9844eed0306" />
+
+	<img width="940" height="315" alt="image" src="https://github.com/user-attachments/assets/c03854ed-3721-4800-9eae-c142f2565e4d" />
+
+**Income vs. Churn**
+
+Customers who churn tend to h**ave slightly lower median incomes than those who remain**. This suggests that **lower-income customers may be more price-sensitive or financially strained**, making them more likely to seek better offers elsewhere.
+
+**Loan Amount vs. Churn**
+
+Customers with **smaller loan amounts are more likely to churn**. Those with smaller loans m**ay feel less committed to the relationship** or **are possibly testing the service**.
+
+**Credit Score vs. Churn**
+
+Customers who churn generally **have significantly lower credit scores**. Customers with lower credit scores **may be dissatisfied with the terms or rates**, or **they might be looking for better offers**that they now qualify for.
+
+**Age vs. Churn**
+
+Younger customers **are more likely to churn compared to older customers**. This may be because **younger customers tend to be less loyal**, are **more inclined to shop around**, or **have changing financial needs**. Age is a significant factor in the probability of churn.
+
+**Previous Defaults vs. Churn**
+
+Customers with **previous defaults are more likely to churn**. This could indicate **dissatisfaction with service terms**, or it might suggest that **these customers are being "managed out" of the service**.
+
+
+4. 
