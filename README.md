@@ -233,6 +233,9 @@ Step 12. Logistic Regression model with XGBoost Classifier
 
 3. What are the key factors that correlate with a customer defaulting on a loan?
 
+	<img width="940" height="496" alt="image" src="https://github.com/user-attachments/assets/0ff08546-801a-492f-bccc-4a96dfff4356" />
+
+
 For XGBoost:
 
 	feature_importance = pd.DataFrame({
