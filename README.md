@@ -457,11 +457,11 @@ Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low c
 
 **Income vs. Churn**
 
-Customers who churn tend to h**ave slightly lower median incomes than those who remain**. This suggests that **lower-income customers may be more price-sensitive or financially strained**, making them more likely to seek better offers elsewhere.
+Customers who churn tend to **have slightly lower median incomes than those who remain**. This suggests that **lower-income customers may be more price-sensitive or financially strained**, making them more likely to seek better offers elsewhere.
 
 **Loan Amount vs. Churn**
 
-Customers with **smaller loan amounts are more likely to churn**. Those with smaller loans m**ay feel less committed to the relationship** or **are possibly testing the service**.
+Customers with **smaller loan amounts are more likely to churn**. Those with smaller loans **may feel less committed to the relationship** or **are possibly testing the service**.
 
 **Credit Score vs. Churn**
 
@@ -477,4 +477,175 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 # CUSTOMER SEGMENTATION FOR MARKETING 
 
+1. Can we segment customers into groups (e.g., "high-value low-risk," "high-risk," "credit builders") to tailor marketing offers and loan products?
 
+
+
+2. How does marketing spend correlate with purchase frequency or new loan uptake? Is the marketing budget being spent effectively?
+
+
+
+# FINANCIAL PRODUCT ANALYSIS
+
+1. What is the typical loan amount granted based on income and credit score?
+
+- Creating Groups Based on Income Brackets and Credit Score Tiers
+
+- Income Brackets:
+  
+	SELECT
+    	Income,  
+   		CASE
+        	WHEN Income >= 0 AND Income <= 50000 THEN '$0-50k'
+        	WHEN Income > 50000 AND Income <= 75000 THEN '$50k-75k'
+        	WHEN Income > 75000 AND Income <= 100000 THEN '$75k-100k'
+        	WHEN Income > 100000 THEN '$100k+'
+        	ELSE 'Unknown'
+    	END AS Income_Bracket
+	FROM
+    	raw_dataset_cleaned;
+
+
+	ALTER TABLE raw_dataset_cleaned
+	ADD COLUMN Income_Bracket VARCHAR(10);
+
+ 
+	UPDATE raw_dataset_cleaned
+	SET Income_Bracket = CASE
+ 	WHEN Income >= 0 AND Income <= 50000 THEN '$0-50k'
+        WHEN Income > 50000 AND Income <= 75000 THEN '$50k-75k'
+        WHEN Income > 75000 AND Income <= 100000 THEN '$75k-100k'
+        WHEN Income > 100000 THEN '$100k+'
+        ELSE 'Unknown'
+    END;
+
+- Credit Score Tiers
+
+ 	SELECT                
+    	Credit_Score,  
+    	CASE
+       		WHEN Credit_Score >= 0 AND Credit_Score <= 579 THEN 'Poor'
+        	WHEN Credit_Score > 580 AND Credit_Score <= 669 THEN 'Fair'
+        	WHEN Credit_Score > 670 AND Credit_Score <= 739 THEN 'Good'
+        	WHEN Credit_Score > 740 AND Credit_Score <= 799 THEN 'Very Good'
+        	WHEN Credit_Score > 800 THEN 'Excellent'
+        	ELSE 'Unknown'
+    	END AS Credit_Score_Tier
+	FROM
+    	raw_dataset_cleaned;
+
+	ALTER TABLE raw_dataset_cleaned
+	ADD COLUMN Credit_Score_Tiers VARCHAR(30);
+
+	UPDATE raw_dataset_cleaned
+	SET Credit_Score_Tiers = CASE
+   		WHEN Credit_Score >= 0 AND Credit_Score <= 579 THEN 'Poor'
+        WHEN Credit_Score > 580 AND Credit_Score <= 669 THEN 'Fair'
+        WHEN Credit_Score > 670 AND Credit_Score <= 739 THEN 'Good'
+        WHEN Credit_Score > 740 AND Credit_Score <= 799 THEN 'Very Good'
+        WHEN Credit_Score > 800 THEN 'Excellent'
+        ELSE 'Unknown'
+    END;
+
+- Using a CTE to calculate the loan amount based on income brackets and credit score tiers
+
+	WITH median_calc AS (
+    SELECT 
+        t.Income_Bracket,
+        t.Credit_Score_Tiers,
+        AVG(t.Loan_Amount) as median_loan_amount
+    FROM (
+        SELECT 
+            Income_Bracket,
+            Credit_Score_Tiers,
+            Loan_Amount,
+            COUNT(*) OVER (PARTITION BY Income_Bracket, Credit_Score_Tiers) as group_count,
+            ROW_NUMBER() OVER (PARTITION BY Income_Bracket, Credit_Score_Tiers ORDER BY Loan_Amount) as row_num
+        FROM raw_dataset_cleaned
+        WHERE Loan_Amount IS NOT NULL
+    ) t
+    WHERE row_num BETWEEN group_count/2.0 AND group_count/2.0 + 1
+    GROUP BY Income_Bracket, Credit_Score_Tiers
+	),
+	mode_calc AS (
+    SELECT 
+        Income_Bracket,
+        Credit_Score_Tiers,
+        Loan_Amount as mode_loan_amount
+    FROM (
+        SELECT 
+            Income_Bracket,
+            Credit_Score_Tiers,
+            Loan_Amount,
+            COUNT(*) as frequency,
+            ROW_NUMBER() OVER (PARTITION BY Income_Bracket, Credit_Score_Tiers ORDER BY COUNT(*) DESC) as rn
+        FROM raw_dataset_cleaned
+        WHERE Loan_Amount IS NOT NULL
+        GROUP BY Income_Bracket, Credit_Score_Tiers, Loan_Amount
+    ) freq_table
+    WHERE rn = 1
+	)
+	SELECT 
+    	t.Income_Bracket,
+    	t.Credit_Score_Tiers,
+    	COUNT(t.Loan_Amount) as loan_count,
+    	ROUND(AVG(t.Loan_Amount), 2) as mean_loan_amount,
+    	MAX(mc.median_loan_amount) as median_loan_amount,  -- Using MAX() aggregate function
+    	MAX(moc.mode_loan_amount) as mode_loan_amount,     -- Using MAX() aggregate function
+    	MIN(t.Loan_Amount) as min_loan_amount,
+    	MAX(t.Loan_Amount) as max_loan_amount,
+    	ROUND(STDDEV(t.Loan_Amount), 2) as std_dev_loan_amount
+	FROM raw_dataset_cleaned as t
+	LEFT JOIN median_calc mc ON t.Income_Bracket = mc.Income_Bracket 
+                        AND t.Credit_Score_Tiers = mc.Credit_Score_Tiers
+	LEFT JOIN mode_calc moc ON t.Income_Bracket = moc.Income_Bracket 
+                        AND t.Credit_Score_Tiers = moc.Credit_Score_Tiers
+	WHERE t.Loan_Amount IS NOT NULL
+	GROUP BY t.Income_Bracket, t.Credit_Score_Tiers
+	ORDER BY 
+    CASE t.Income_Bracket
+        WHEN '$0-50k' THEN 1
+        WHEN '$50k-75k' THEN 2
+        WHEN '$75k-100k' THEN 3
+        WHEN '$100k+' THEN 4
+        ELSE 5
+    END,
+    CASE t.Credit_Score_Tiers
+        WHEN 'Poor' THEN 1
+        WHEN 'Fair' THEN 2
+        WHEN 'Good' THEN 3
+        WHEN 'Very Good' THEN 4
+        WHEN 'Excellent' THEN 5
+        ELSE 6
+    END;
+
+	<img width="940" height="841" alt="image" src="https://github.com/user-attachments/assets/b52b9868-24e2-4cd0-b39f-01cc82885035" />
+
+Key insights and interpretations regarding loan amounts based on income brackets and credit score tiers:
+
+1.	**Borrowers with very good credit generally receive higher loan amounts across most income brackets**. For example, customers in the $0–50k income bracket received an average loan amount of $29,809.60. 
+2.	**Poor credit borrowers consistently receive lower loan amounts**, regardless of their income level.
+3.	**Higher income does not always correlate with higher loan amounts**. Interestingly, some **lower-income brackets sometimes have higher average loan amounts than higher-income** brackets within the same credit tier.
+4.	The **$75k–100k income bracket exhibits the most variability in lending patterns** across different credit tiers.
+5.	**Data Quality Issues:** Several entries show minimum values higher than maximum values (e.g., $0–50k/Poor: min 10,688 > max 9,795), indicating potential data errors.
+6.	**Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
+
+
+2. How does spending behaviour (spending score) relate to income and creditworthiness?
+
+	import pandas as pd
+	from sklearn.linear_model import LinearRegression
+	X = df[[Income', Credit_Score']]
+	y = df[Spending_Score]
+	model = LinearRegression ()
+	model.fit(X, y)
+	print(model.coef_, model.intercept_)
+
+	<img width="880" height="66" alt="image" src="https://github.com/user-attachments/assets/da662135-510f-44f0-a082-d0fc7dff3f93" />
+
+The multiple linear regression (MLR) model is:
+	Spending Behaviour = 50.1481 + (-4.7341 * Income) + (8.2135 * Credit Score)
+
+A **moderate negative correlation exists between income and spending (borrowing) behaviour**. Thus, for each additional increase in income, customer borrowing behaviour decreases by 4.7341 units, assuming the credit score remains constant. This indicates that **a rise in income does not necessarily lead to an increase in client borrowing**.
+
+On the other hand, **a very strong positive relationship is evident between credit score and spending behaviour**. The analysis indicates that for every one-unit increase in credit score, customer borrowing behaviour increases by 8.2135 units, provided income remains constant. This suggests that **customers with higher credit scores tend to borrow more, and vice versa**.
