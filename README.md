@@ -475,5 +475,6 @@ Younger customers **are more likely to churn compared to older customers**. This
 
 Customers with **previous defaults are more likely to churn**. This could indicate **dissatisfaction with service terms**, or it might suggest that **these customers are being "managed out" of the service**.
 
+# CUSTOMER SEGMENTATION FOR MARKETING 
 
-4. 
+
