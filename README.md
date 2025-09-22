@@ -59,6 +59,7 @@ The data cleaning process involved the following process
         risk_analysis
         print(risk_analysis.isnull().sum())
 
+<img width="959" height="280" alt="image" src="https://github.com/user-attachments/assets/15a9e633-af8f-4398-9691-12c7bdd8dfc6" />
 
 2. 
 
