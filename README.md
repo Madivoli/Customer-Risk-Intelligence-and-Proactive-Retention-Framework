@@ -118,4 +118,95 @@ Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfactio
 
 
 
-2. Identifying churners
+2. Identifying the top 3 defaulters:
+
+        SELECT Customer_ID, SUM(Loan_Amount) AS loan_amount
+        FROM raw_dataset_cleaned 
+        WHERE Defaulted = 1
+        GROUP BY Customer_ID
+        ORDER BY 2 DESC
+        LIMIT 3; 
+
+# Results
+
+The top 3 customers with the highest loan default are:
+o **Customer ID 159:** $48,668 
+o **Customer ID 398:** $48,590
+o **Customer ID 322:** $48,285
+
+3. Identifying the top 3 churners by gender and age group
+
+- Creating age bins
+
+        SELECT
+        age,
+        CASE
+            WHEN CAST(age AS SIGNED) >= 18 AND CAST(age AS SIGNED) <= 25 THEN '18-25'
+            WHEN CAST(age AS SIGNED) >= 26 AND CAST(age AS SIGNED) <= 35 THEN '26-35'
+            WHEN CAST(age AS SIGNED) >= 36 AND CAST(age AS SIGNED) <= 50 THEN '36-50'
+            WHEN CAST(age AS SIGNED) >= 51 AND CAST(age AS SIGNED) <= 65 THEN '51-65'
+            WHEN CAST(age AS SIGNED) >= 66 THEN '66+'
+            ELSE 'Unknown'
+		        END AS age_group
+        FROM
+        raw_dataset_cleaned
+        WHERE
+        age IS NOT NULL
+        LIMIT 50;   
+
+- Adding the age-group column:
+
+        ALTER TABLE raw_dataset_cleaned
+        ADD COLUMN Age_Group VARCHAR(10);
+
+- Updating the age group column:
+
+        UPDATE raw_dataset_cleaned
+        SET Age_Group = CASE
+            WHEN CAST(age AS SIGNED) >= 18 AND CAST(age AS SIGNED) <= 25 THEN '18-25'
+            WHEN CAST(age AS SIGNED) >= 26 AND CAST(age AS SIGNED) <= 35 THEN '26-35'
+            WHEN CAST(age AS SIGNED) >= 36 AND CAST(age AS SIGNED) <= 45 THEN '36-45'
+            WHEN CAST(age AS SIGNED) >= 46 AND CAST(age AS SIGNED) <= 55 THEN '46-55'
+            WHEN CAST(age AS SIGNED) >= 56 AND CAST(age AS SIGNED) <= 65 THEN '56-65'
+            WHEN CAST(age AS SIGNED) >= 66 THEN '66+'
+            ELSE 'Unknown'
+		        END; 
+
+- Top 3 chuners by age group:
+
+        SELECT 
+	        Age_Group,
+            COUNT(Customer_Churn) AS churn_by_gender
+        FROM raw_dataset_cleaned 
+        WHERE Customer_Churn = 1
+        GROUP BY  Age_Group
+        ORDER BY 2 DESC
+        LIMIT 3; 
+
+# Results
+
+The top 3 churners by age group were:
+o **56-65:** 29
+o **46-55:** 26
+o **18-25:** 26
+
+- Top chuner by gender
+
+        SELECT 
+	        Gender,
+            COUNT(Customer_Churn) AS churn_by_gender
+        FROM raw_dataset_cleaned 
+        WHERE Customer_Churn = 1
+        GROUP BY  Gender
+        ORDER BY 2 DESC; 
+
+# Results
+
+The top churner by gender is:
+o **Male:** 77
+o **Female:** 50
+
+
+4. 
+
+The **highest rates of churn** were observed among **males aged 51-65**, followed by **males aged 36-50**. The lowest rates of churn were found among females aged 66 and older. 
