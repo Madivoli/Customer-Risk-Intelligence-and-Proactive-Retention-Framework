@@ -53,7 +53,7 @@ The data cleaning process involved the following process
 
 1. Identifying and handling missing values
 
-print(risk_analysis.isnull().sum())
+        print(risk_analysis.isnull().sum())
 
 
 2. 
