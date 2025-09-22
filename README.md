@@ -276,17 +276,21 @@ Step 6. Observing how well our model performs on the EXAM (the testing data)
 **Results:** Our model's accuracy is 82%, this means that it is correctly predicting whether a customer will default or not 82 times out of 100 on unseen data.
 
 Step 7. Creating the model with class weights
+	
 	model = LogisticRegression(random_state=42, max_iter=1000, 
                           class_weight='balanced')  # This tells the model to automatically balance classes
 
 Step 8. Retrain the model
-	model.fit(X_train, y_train)
+	
+ 	model.fit(X_train, y_train)
 
 Step 10. Make new predictions
-	y_pred = model.predict(X_test)
+	
+ 	y_pred = model.predict(X_test)
 
 Step 11. Check the new predictions
-	print("New predicted class distribution:")
+	
+ 	print("New predicted class distribution:")
 	print(pd.Series(y_pred).value_counts())
 
 
@@ -310,7 +314,8 @@ Step 12. Logistic Regression model with XGBoost Classifier
 
 2. What are the key factors that correlate with a customer defaulting on a loan?
 
-# For XGBoost
+For XGBoost:
+
 	feature_importance = pd.DataFrame({
     	'feature': X_train.columns,
     	'importance': xgb_model.feature_importances_
@@ -319,7 +324,8 @@ Step 12. Logistic Regression model with XGBoost Classifier
 	print("Top 10 Most Important Features:")
 	print(feature_importance.head(10))
 
-# Plot feature importance
+Plot feature importance:
+
 	plt.figure(figsize=(10, 6))
 	plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
 	plt.xlabel('Importance')
