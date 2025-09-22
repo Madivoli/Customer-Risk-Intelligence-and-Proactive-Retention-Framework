@@ -49,3 +49,12 @@ Question: How does spending behaviour (spending score) relate to income and cred
 
 
 # DATA PROCESSING, CLEANING AND MANIPULATION
+The data cleaning process involved the following process
+
+1. Identifying and handling missing values
+
+print(risk_analysis.isnull().sum())
+
+
+2. 
+
