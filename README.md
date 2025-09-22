@@ -127,8 +127,9 @@ Total churn is **127 customers**. Many of the few customers who are not defaulti
 Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
 
 
+# RISK ASSESSMENT & DEFAULT PREDICTION ANALYSIS
 
-2. Identifying the top 3 defaulters:
+1. Identifying the top 3 defaulters:
 
         SELECT Customer_ID, SUM(Loan_Amount) AS loan_amount
         FROM raw_dataset_cleaned 
@@ -147,7 +148,125 @@ o **Customer ID 398:** $48,590
 
 o **Customer ID 322:** $48,285
 
-3. Identifying the top 3 churners by gender and age group
+2. Can we build a model to predict the probability of default for a new applicant based on their profile?
+
+Step 1. Grouping ages into logical, non-discriminatory bins
+		
+  	age_bins = [18, 25, 35, 50, 65, 100]
+	age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
+	risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
+
+Step 2. Training our model to Predict Loan Defaulters
+	
+ 	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
+	X = risk_analysis[feature_columns]
+	y = risk_analysis['Defaulted']
+
+	X = pd.get_dummies(X, columns=['Age_Group'], drop_first=True)
+
+	from sklearn.model_selection import train_test_split
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+	print("Training features shape:", X_train.shape)
+	print("Testing features shape:", X_test.shape)
+	print("Training target shape:", y_train.shape)
+	print("Testing target shape:", y_test.shape)
+	print("\nFirst few rows of X_train:")
+	print(X_train.head())
+
+Step 3. Choosing our model (in this case, a LogisticRegression)
+
+	from sklearn.linear_model import LogisticRegression
+
+Step 4. Creating the model
+
+	model = LogisticRegression(random_state=42, max_iter=1000)
+
+Step 5. Training the model on the STUDY GROUP (the training data)
+
+	model.fit(X_train, y_train)
+
+Step 6. Observing how well our model performs on the EXAM (the testing data)
+
+	accuracy = model.score(X_test, y_test)
+	print(f"Model Accuracy: {accuracy:.2%}") 
+
+**Results:** Our model's accuracy is 82%, this means that it is correctly predicting whether a customer will default or not 82 times out of 100 on unseen data.
+
+Step 7. Creating the model with class weights
+	
+	model = LogisticRegression(random_state=42, max_iter=1000, 
+                          class_weight='balanced')  # This tells the model to automatically balance classes
+
+Step 8. Retrain the model
+	
+ 	model.fit(X_train, y_train)
+
+Step 10. Make new predictions
+	
+ 	y_pred = model.predict(X_test)
+
+Step 11. Check the new predictions
+	
+ 	print("New predicted class distribution:")
+	print(pd.Series(y_pred).value_counts())
+
+
+Step 12. Logistic Regression model with XGBoost Classifier
+
+	from xgboost import XGBClassifier
+
+	xgb_model = XGBClassifier(
+    	random_state=42,
+    	scale_pos_weight=(len(y_train) - sum(y_train)) / sum(y_train),  
+    	eval_metric='logloss',
+    	use_label_encoder=False
+		)
+	xgb_model.fit(X_train, y_train)
+
+	y_pred_xgb = xgb_model.predict(X_test)
+	print("XGBoost Classification Report:")
+	print(classification_report(y_test, y_pred_xgb))
+
+**Results:** From to the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**. It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**. However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates for class 1.** This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
+
+3. What are the key factors that correlate with a customer defaulting on a loan?
+
+For XGBoost:
+
+	feature_importance = pd.DataFrame({
+    	'feature': X_train.columns,
+    	'importance': xgb_model.feature_importances_
+	}).sort_values('importance', ascending=False)
+
+	print("Top 10 Most Important Features:")
+	print(feature_importance.head(10))
+
+Plot feature importance:
+
+	plt.figure(figsize=(10, 6))
+	plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
+	plt.xlabel('Importance')
+	plt.title('Top 10 Features for Predicting Default')
+	plt.tight_layout()
+	plt.show()
+
+**Results:**
+
+The age group of **26-35 years (22.6% importance) is the strongest predictor of default risk**. Customers in this category are at the highest risk, which may be due to factors such as **financial instability**, **being new credit users**, or **having lower income levels**. 
+
+The **second strongest predictor of default risk is the age group of 66 and older (15.1% importance)**. This may be related to **fixed incomes**, **retirement**, or **healthcare expenses**. 
+
+Additionally, **income level is a strong predictor of default risk**. Furthermore, **past behaviour is a reliable indicator of future behaviour**, as expected. 
+
+
+# CUSTOMER CHURN ANALYSIS 
+
+1. Identifying the top 3 churners by gender and age group
+
+	<img width="941" height="612" alt="image" src="https://github.com/user-attachments/assets/f8e0b1f4-fad8-4264-b2e5-49fe3cf1600d" />
+
 
 - Creating age bins
 
@@ -206,7 +325,6 @@ o **46-55:** 26
 
 o **18-25:** 26
 
-
 - Top chuner by gender:
 
   		SELECT 
@@ -225,127 +343,7 @@ o **Male:** 77
 
 o **Female:** 50
 
+2. Why are customers leaving? What patterns distinguish customers who churn from those who stay?
 
-# RISK ASSESSMENT & DEFAULT PREDICTION ANALYSIS
-
-1. Can we build a model to predict the probability of default for a new applicant based on their profile?
-
-Step 1. Grouping ages into logical, non-discriminatory bins
-		
-  	age_bins = [18, 25, 35, 50, 65, 100]
-	age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
-	risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
-
-Step 2. Training our model to Predict Loan Defaulters
-	
- 	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
-	X = risk_analysis[feature_columns]
-	y = risk_analysis['Defaulted']
-
-	X = pd.get_dummies(X, columns=['Age_Group'], drop_first=True)
-
-	from sklearn.model_selection import train_test_split
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-
-	print("Training features shape:", X_train.shape)
-	print("Testing features shape:", X_test.shape)
-	print("Training target shape:", y_train.shape)
-	print("Testing target shape:", y_test.shape)
-	print("\nFirst few rows of X_train:")
-	print(X_train.head())
-
-
-Step 3. Choosing our model (in this case, a LogisticRegression)
-
-	from sklearn.linear_model import LogisticRegression
-
-Step 4. Creating the model
-
-	model = LogisticRegression(random_state=42, max_iter=1000)
-
-Step 5. Training the model on the STUDY GROUP (the training data)
-
-	model.fit(X_train, y_train)
-
-Step 6. Observing how well our model performs on the EXAM (the testing data)
-
-	accuracy = model.score(X_test, y_test)
-	print(f"Model Accuracy: {accuracy:.2%}") 
-
-**Results:** Our model's accuracy is 82%, this means that it is correctly predicting whether a customer will default or not 82 times out of 100 on unseen data.
-
-Step 7. Creating the model with class weights
-	
-	model = LogisticRegression(random_state=42, max_iter=1000, 
-                          class_weight='balanced')  # This tells the model to automatically balance classes
-
-Step 8. Retrain the model
-	
- 	model.fit(X_train, y_train)
-
-Step 10. Make new predictions
-	
- 	y_pred = model.predict(X_test)
-
-Step 11. Check the new predictions
-	
- 	print("New predicted class distribution:")
-	print(pd.Series(y_pred).value_counts())
-
-
-Step 12. Logistic Regression model with XGBoost Classifier
-
-	from xgboost import XGBClassifier
-
-	xgb_model = XGBClassifier(
-    	random_state=42,
-    	scale_pos_weight=(len(y_train) - sum(y_train)) / sum(y_train),  
-    	eval_metric='logloss',
-    	use_label_encoder=False
-		)
-	xgb_model.fit(X_train, y_train)
-
-	y_pred_xgb = xgb_model.predict(X_test)
-	print("XGBoost Classification Report:")
-	print(classification_report(y_test, y_pred_xgb))
-
-**Results:** Our Logistic Regression model's accuracy is 72%, this means that it is correctly predicting whether a customer will default or not 72 times out of 100 on unseen data.
-
-2. What are the key factors that correlate with a customer defaulting on a loan?
-
-For XGBoost:
-
-	feature_importance = pd.DataFrame({
-    	'feature': X_train.columns,
-    	'importance': xgb_model.feature_importances_
-	}).sort_values('importance', ascending=False)
-
-	print("Top 10 Most Important Features:")
-	print(feature_importance.head(10))
-
-Plot feature importance:
-
-	plt.figure(figsize=(10, 6))
-	plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
-	plt.xlabel('Importance')
-	plt.title('Top 10 Features for Predicting Default')
-	plt.tight_layout()
-	plt.show()
-
-
-
-
-
-
-
-
-
-
-The age group of **26-35 years (22.6% importance) is the strongest predictor of default risk**. Customers in this category are at the highest risk, which may be due to factors such as **financial instability**, **being new credit users**, or **having lower income levels**. 
-
-The **second strongest predictor of default risk is the age group of 66 and older (15.1% importance)**. This may be related to **fixed incomes**, **retirement**, or **healthcare expenses**. 
-
-Additionally, **income level is a strong predictor of default risk**. Furthermore, **past behaviour is a reliable indicator of future behaviour**, as expected. 
 
 
