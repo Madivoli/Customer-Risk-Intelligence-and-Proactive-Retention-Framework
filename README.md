@@ -218,13 +218,31 @@ o **18-25:** 26
 
 # Results
 
-The top churner by gender is:
+The top churner by gender:
 
 o **Male:** 77
 
 o **Female:** 50
 
 
-4. 
+# RISK ASSESSMENT & DEFAULT PREDICTION ANALYSIS
 
-The **highest rates of churn** were observed among **males aged 51-65**, followed by **males aged 36-50**. The lowest rates of churn were found among females aged 66 and older. 
+What are the key factors that correlate with a customer defaulting on a loan?
+
+	feature_importance = pd.DataFrame({
+    	'feature': X_train.columns,
+    	'importance': xgb_model.feature_importances_
+	}).sort_values('importance', ascending=False)
+
+	print("Top 10 Most Important Features:")
+	print(feature_importance.head(10))
+
+	# Plot feature importance
+	plt.figure(figsize=(10, 6))
+	plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
+	plt.xlabel('Importance')
+	plt.title('Top 10 Features for Predicting Default')
+	plt.tight_layout()
+	plt.show()
+
+
