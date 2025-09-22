@@ -77,6 +77,8 @@ The data cleaning process involved the following process
 
 # Exploratory Data Analysis
 
+1. Summarising key metrics:
+
 The analysis focused on understanding the distribution of the dataset and identifying trends.
 
     SELECT
@@ -112,6 +114,8 @@ Default rate percentage is	**97.4**. This is extremely high. An acceptable defau
 
 Total churn is **127 customers**. Many of the few customers who are not defaulting are still leaving.
 
-Churn Rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
+Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
 
-    
+
+
+2. Identifying churners
