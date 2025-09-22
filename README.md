@@ -98,8 +98,8 @@ The analysis focused on understanding the distribution of the dataset and identi
         ROUND(SUM(Loan_Amount), 2) AS loan_size, 
         ROUND(SUM(Marketing_Spend), 2) AS total_marketing_spend, 
         ROUND(SUM(Sales), 2) AS total_revenue, 
-        SUM(Previous_Defaults) AS total_defaults,
-        ROUND((SUM(Previous_Defaults) * 100.0) / COUNT(*), 2) AS default_rate_pct,
+        SUM(Defaulted) AS total_defaults,
+        ROUND((SUM(Defaulted) * 100.0) / COUNT(*), 2) AS default_rate_pct,
         SUM(Customer_Churn) AS total_churns,
         ROUND((SUM(Customer_Churn) * 100.0) / COUNT(*), 2) AS churn_rate_pct
     FROM
@@ -116,11 +116,11 @@ The loan size is **$14,228,468.00**. This is the total capital exposed to **cred
 
 The total marketing spend is **$5,279,064.00**.	Spending $5.3 million to acquire 500 customers results in a **Customer Acquisition Cost (CAC)** of approximately **$10,558 per customer**, which is **not sustainable**.
 
-Total Revenue is **$27,189,477.00**. Without knowing **the cost of capital**, the significance of this number is meaningless. However, with a **default rate of 97.4%**, the revenue generated is **almost entirely wiped out by losses**.
+Total Revenue is **$27,189,477.00**. Without knowing **the cost of capital**, the significance of this number is meaningless. 
 
-Total defaults	are **487**. The situation is **catastrophic**, **as only 13 out of 500 customers are servicing their loans**.
+Total defaults	are **95**. The situation is **manageable**, **as only 405 out of 500 customers are servicing their loans**.
 
-Default rate percentage is	**97.4**. This is extremely high. An acceptable default rate for lending in Kenya ranges **between 16% and 40%**, meaning the **business is currently losing money**.
+Default rate is	**19%**. An acceptable default rate for lending in Kenya ranges **between 16% and 40%**, meaning the **business is currently performing well in terms of managing its default risk**.
 
 Total churn is **127 customers**. Many of the few customers who are not defaulting are still leaving.
 
@@ -227,7 +227,33 @@ o **Female:** 50
 
 # RISK ASSESSMENT & DEFAULT PREDICTION ANALYSIS
 
-What are the key factors that correlate with a customer defaulting on a loan?
+1. Can we build a model to predict the probability of default for a new applicant based on their profile?
+
+Step 1. Grouping ages into logical, non-discriminatory bins
+		age_bins = [18, 25, 35, 50, 65, 100]
+		age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
+		risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
+
+Step 2. Training a model to Predict Loan Defaulters
+	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
+	X = risk_analysis[feature_columns]
+	y = risk_analysis['Defaulted']
+
+	X = pd.get_dummies(X, columns=['Age_Group'], drop_first=True)
+
+	from sklearn.model_selection import train_test_split
+	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+	print("Training features shape:", X_train.shape)
+	print("Testing features shape:", X_test.shape)
+	print("Training target shape:", y_train.shape)
+	print("Testing target shape:", y_test.shape)
+	print("\nFirst few rows of X_train:")
+	print(X_train.head())
+  
+
+2. What are the key factors that correlate with a customer defaulting on a loan?
 
 # For XGBoost
 	feature_importance = pd.DataFrame({
@@ -251,4 +277,5 @@ The age group of **26-35 years (22.6% importance) is the strongest predictor of 
 The **second strongest predictor of default risk is the age group of 66 and older (15.1% importance)**. This may be related to **fixed incomes**, **retirement**, or **healthcare expenses**. 
 
 Additionally, **income level is a strong predictor of default risk**. Furthermore, **past behaviour is a reliable indicator of future behaviour**, as expected. 
+
 
