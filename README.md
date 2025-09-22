@@ -59,7 +59,17 @@ The data cleaning process involved the following process
         risk_analysis
         print(risk_analysis.isnull().sum())
 
-<img width="959" height="280" alt="image" src="https://github.com/user-attachments/assets/15a9e633-af8f-4398-9691-12c7bdd8dfc6" />
+        <img width="959" height="280" alt="image" src="https://github.com/user-attachments/assets/15a9e633-af8f-4398-9691-12c7bdd8dfc6" />
 
-2. 
+2. Handled missing values using an imputation technique. # Filled all missing values in numeric columns with their respective means.
+
+        import pandas as pd
+        risk_analysis = risk_analysis.fillna(risk_analysis.mean(numeric_only=True)).round()
+        print(risk_analysis.isnull().sum())
+
+        <img width="964" height="267" alt="image" src="https://github.com/user-attachments/assets/f3489d70-19fe-45ae-9b2c-2dc36d0b4a91" />
+
+
+3. 
+        
 
