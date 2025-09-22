@@ -59,7 +59,7 @@ The data cleaning process involved the following process
         risk_analysis
         print(risk_analysis.isnull().sum())
 
-2. Handled missing values using an imputation technique. # Filled all missing values in numeric columns with their respective means.
+2. Handled missing values using an imputation technique. Filled all missing values in numeric columns with their respective means.
 
         import pandas as pd
         risk_analysis = risk_analysis.fillna(risk_analysis.mean(numeric_only=True)).round()
@@ -70,7 +70,27 @@ The data cleaning process involved the following process
         import pandas as pd
         risk_analysis.to_excel(r"C:\Users\hp\OneDrive\Projects\Victoria Solutions\raw_dataset_week4.xlsx", index=False)
 
+4. Creating a staging table in SQL
+        CREATE TABLE raw_dataset_cleaned_backup AS SELECT * FROM raw_dataset_cleaned;
 
-4. 
+
+
+# Exploratory Data Analysis
+
+The analysis focused on understanding the distribution of the dataset and identifying trends.
+
+    SELECT
+        COUNT(Customer_ID) AS total_customers,
+        ROUND(AVG(Income), 2) AS average_income, 
+        ROUND(AVG(Loan_Amount), 2) AS average_loan_size, 
+        ROUND(SUM(Loan_Amount), 2) AS loan_size, 
+        ROUND(SUM(Marketing_Spend), 2) AS total_marketing_spend, 
+        ROUND(SUM(Sales), 2) AS total_revenue, 
+        SUM(Previous_Defaults) AS total_defaults,
+        ROUND((SUM(Previous_Defaults) * 100.0) / COUNT(*), 2) AS default_rate_pct,
+        SUM(Customer_Churn) AS total_churns,
+        ROUND((SUM(Customer_Churn) * 100.0) / COUNT(*), 2) AS churn_rate_pct
+    FROM
+        raw_dataset_cleaned;
         
 
