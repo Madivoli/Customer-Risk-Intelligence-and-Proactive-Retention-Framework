@@ -229,6 +229,7 @@ o **Female:** 50
 
 What are the key factors that correlate with a customer defaulting on a loan?
 
+# For XGBoost
 	feature_importance = pd.DataFrame({
     	'feature': X_train.columns,
     	'importance': xgb_model.feature_importances_
@@ -237,7 +238,7 @@ What are the key factors that correlate with a customer defaulting on a loan?
 	print("Top 10 Most Important Features:")
 	print(feature_importance.head(10))
 
-	# Plot feature importance
+# Plot feature importance
 	plt.figure(figsize=(10, 6))
 	plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
 	plt.xlabel('Importance')
