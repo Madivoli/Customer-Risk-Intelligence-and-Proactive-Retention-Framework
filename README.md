@@ -34,7 +34,9 @@ Question: How does spending behaviour (spending score) relate to income and cred
 
 # Tools and their purpose 
 •	Excel: Initial data exploration, using filters and pivot tables to get a quick sense of distribution (e.g., average income of defaulters vs. non-defaulters).
+
 •	SQL: To query the database and prepare specific datasets for analysis.
+
 •	Python (Pandas, Scikit-learn, Seaborn): The primary tool for deep analysis.
     o	Pandas: For robust data cleaning and manipulation.
     o	Seaborn/Matplotlib: For creating visualisations like boxplots (Income by Default status) and correlation heatmaps.
