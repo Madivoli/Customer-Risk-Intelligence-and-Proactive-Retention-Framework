@@ -107,6 +107,7 @@ The analysis focused on understanding the distribution of the dataset and identi
         raw_dataset_cleaned;
 		
 <img width="940" height="409" alt="image" src="https://github.com/user-attachments/assets/968da501-634c-4fc8-93ee-c9887948ea16" />
+
 # Results 
 
 The Total number of customers was **500**. The company has a small, manageable customer base that can be analysed to identify and fix problems. 
