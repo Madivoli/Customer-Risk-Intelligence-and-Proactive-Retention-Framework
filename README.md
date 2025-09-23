@@ -139,6 +139,8 @@ Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfactio
         GROUP BY Customer_ID
         ORDER BY 2 DESC
         LIMIT 3; 
+		
+<img width="932" height="452" alt="image" src="https://github.com/user-attachments/assets/052eb7dd-e90b-4395-a590-396a1cfb6337" />
 
 # Results
 
