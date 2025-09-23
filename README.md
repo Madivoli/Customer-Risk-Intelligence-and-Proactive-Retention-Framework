@@ -502,26 +502,27 @@ Customers with **previous defaults are more likely to churn**. This could indica
         	WHEN Income > 100000 THEN '$100k+'
         	ELSE 'Unknown'
     	END AS Income_Bracket
-	FROM
-    	raw_dataset_cleaned;
+		FROM
+    		raw_dataset_cleaned;
 
 - Adding a column
   
-	ALTER TABLE raw_dataset_cleaned
-	ADD COLUMN Income_Bracket VARCHAR(10);
+		ALTER TABLE raw_dataset_cleaned
+		ADD COLUMN Income_Bracket VARCHAR(10);
 
  - Updating the column
    
-	UPDATE raw_dataset_cleaned
-	SET Income_Bracket = CASE
- 	WHEN Income >= 0 AND Income <= 50000 THEN '$0-50k'
-        WHEN Income > 50000 AND Income <= 75000 THEN '$50k-75k'
-        WHEN Income > 75000 AND Income <= 100000 THEN '$75k-100k'
-        WHEN Income > 100000 THEN '$100k+'
+		UPDATE raw_dataset_cleaned
+		SET Income_Bracket =
+		CASE
+ 			WHEN Income >= 0 AND Income <= 50000 THEN '$0-50k'
+        	WHEN Income > 50000 AND Income <= 75000 THEN '$50k-75k'
+        	WHEN Income > 75000 AND Income <= 100000 THEN '$75k-100k'
+        	WHEN Income > 100000 THEN '$100k+'
         ELSE 'Unknown'
-    END;
+    	END;
 
-- Creating credit Score Tiers
+- Creating Credit Score Tiers
 
  		SELECT                
     		Credit_Score,  
