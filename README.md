@@ -90,7 +90,7 @@ The data cleaning process involved the following process
 
 **1. Summarising key metrics:**
 
-The analysis focused on understanding the distribution of the dataset and identifying trends.
+The analysis focused on understanding the dataset's distribution and identifying trends.
 
     SELECT
         COUNT(Customer_ID) AS total_customers,
@@ -131,7 +131,7 @@ Total churn is **127 customers**. Many of the few customers who are not defaulti
 Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
 
 
-# RISK ASSESSMENT & DEFAULT PREDICTION ANALYSIS
+# RISK ASSESSMENT & DEFAULT PREDICTION
 
 **1. Identifying the top 3 defaulters:**
 
