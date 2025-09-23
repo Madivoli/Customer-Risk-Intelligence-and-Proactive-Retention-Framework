@@ -558,7 +558,7 @@ Linear regression model:
 **Results:** 
 
 There is a **negative relationship between marketing spend and purchase frequency**, indicating that as purchase frequency increases, marketing spending decreases. 
-From the coefficient results, each one-unit increase in purchase frequency is associated with a predicted decrease in marketing spend of $10,902. The **Customer Acquisition Cost (CAC)** decreases with every additional purchase by $10,902.
+From the coefficient results, each one-unit increase in purchase frequency is associated with a predicted decrease in marketing spend of $10,902. Thus, the **Customer Acquisition Cost (CAC)** decreases with every additional purchase by $22.45.
 
 **Practical Example**
 
@@ -572,11 +572,11 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 		o	Predicted Total Spend = 10,902 - 112.25
 		o	Predicted Total Spend = $10,789.75
 
-•	For a customer with 6 purchases:
+•	For a customer with 10 purchases:
 
 		o	Predicted Total Spend = 10,902 - (22.45 * 10) = $10,697.50
 
-**Interpretation:** moving from 5 to 10 purchases results in an **decrease of $92.25 in predicted marketing spending**, which equates to a difference of $10,697.5 compared to $10,789.75. The model clearly demonstrates that e**ncouraging repeat purchases serves as a powerful strategy for reducing markting cost**. Each additional purchase a customer makes is projected to contribute over $90 saving in marketing expense.
+**Interpretation:** moving from 5 to 10 purchases results in a **decrease of $92.25 in predicted marketing spend**, which equates to a difference of $10,697.5 compared to $10,789.75. The model clearly demonstrates that **encouraging repeat purchases serves as a powerful strategy for reducing marketing cost**. Each additional purchase a customer makes is projected to contribute over $90 in savings in marketing expenses.
 
 # FINANCIAL PRODUCT ANALYSIS
 
@@ -746,7 +746,7 @@ Key insights and interpretations regarding loan amounts based on income brackets
 	model.fit(X, y)
 	print(model.coef_, model.intercept_)
 
-	<img width="880" height="66" alt="image" src="https://github.com/user-attachments/assets/da662135-510f-44f0-a082-d0fc7dff3f93" />
+<img width="880" height="66" alt="image" src="https://github.com/user-attachments/assets/da662135-510f-44f0-a082-d0fc7dff3f93" />
 
 The multiple linear regression (MLR) model is:
 
@@ -754,4 +754,4 @@ The multiple linear regression (MLR) model is:
 
 A **moderate negative correlation exists between income and spending (borrowing) behaviour**. Thus, for each additional increase in income, customer borrowing behaviour decreases by 4.7341 units, assuming the credit score remains constant. This indicates that **a rise in income does not necessarily lead to an increase in client borrowing**.
 
-On the other hand, **a very strong positive relationship is evident between credit score and spending behaviour**. The analysis indicates that for every one-unit increase in credit score, customer borrowing behaviour increases by 8.2135 units, provided income remains constant. This suggests that **customers with higher credit scores tend to borrow more, and vice versa**.
+On the other hand, **a very strong positive relationship exists between credit score and spending behaviour**. The analysis indicates that for every one-unit increase in credit score, customer borrowing behaviour increases by 8.2135 units, provided income remains constant. This suggests that **customers with higher credit scores tend to borrow more, and vice versa**.
