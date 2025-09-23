@@ -493,7 +493,7 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 - Income Brackets:
   
-	SELECT
+		SELECT
     	Income,  
    		CASE
         	WHEN Income >= 0 AND Income <= 50000 THEN '$0-50k'
