@@ -238,12 +238,9 @@ Step 12. Logistic Regression model with XGBoost Classifier
 <img width="977" height="180" alt="image" src="https://github.com/user-attachments/assets/4268d6e2-e2c8-44ad-a97f-48aecbcb457d" />
 
 
-**Results:** From to the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**. It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**. However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates for class 1.** This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
+**Results:** From to the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**. It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**. However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates of 25-17% for class 1.** This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
 
 **3. What are the key factors that correlate with a customer defaulting on a loan?**
-
-<img width="940" height="496" alt="image" src="https://github.com/user-attachments/assets/0ff08546-801a-492f-bccc-4a96dfff4356" />
-
 
 For XGBoost:
 
@@ -263,6 +260,10 @@ Plot feature importance:
 	plt.title('Top 10 Features for Predicting Default')
 	plt.tight_layout()
 	plt.show()
+
+<img width="967" height="180" alt="image" src="https://github.com/user-attachments/assets/dde9016d-62f5-4397-948b-364d53853add" />
+
+<img width="940" height="496" alt="image" src="https://github.com/user-attachments/assets/0ff08546-801a-492f-bccc-4a96dfff4356" />
 
 **Results:**
 
