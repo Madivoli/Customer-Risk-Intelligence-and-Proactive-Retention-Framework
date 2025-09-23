@@ -527,13 +527,49 @@ The **largest customer segment** is **High-Value, High-Risk**, **with loan amoun
 • Protect and grow the High-Value, Low-Risk segment through premium services and retention strategies
 
 
-2. How does marketing spend correlate with purchase frequency or new loan uptake? Is the marketing budget being spent effectively?
+**2. How does marketing spend correlate with purchase frequency or new loan uptake? Is the marketing budget being spent effectively?**
+
+		import pandas as pd
+		from sklearn.linear_model import LinearRegression
+		X = risk_analysis[['Purchase_Frequency']]
+		y = risk_analysis['Marketing_Spend']
+		model = LinearRegression ()
+		model.fit(X, y)
+		print(model.coef_, model.intercept_)
+
+<img width="970" height="44" alt="image" src="https://github.com/user-attachments/assets/adc353b0-218d-431a-90dd-6bda21971ce3" />
 
 
+Linear regression model:
+
+	Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
+
+**Results:** 
+
+There is a **negative relationship between marketing spend and purchase frequency**, indicating that as purchase frequency increases, marketing spending decreases. 
+From the coefficient results, each one-unit increase in purchase frequency is associated with a predicted decrease in marketing spend of $10,902. The **Customer Acquisition Cost (CAC)** decreases with every additional purchase by $10,902.
+
+**Practical Example**
+
+Using our model to make marketing spend prediction:
+
+Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
+
+•	For a customer with 5 purchases:
+
+		o	Predicted Total Spend = 10,902 - (22.45 * 5)
+		o	Predicted Total Spend = 10,902 - 112.25
+		o	Predicted Total Spend = $10,789.75
+
+•	For a customer with 6 purchases:
+
+		o	Predicted Total Spend = 10,902 - (22.45 * 10) = $10,697.50
+
+**Interpretation:** moving from 5 to 10 purchases results in an **decrease of $92.25 in predicted marketing spending**, which equates to a difference of $10,697.5 compared to $10,789.75. The model clearly demonstrates that e**ncouraging repeat purchases serves as a powerful strategy for reducing markting cost**. Each additional purchase a customer makes is projected to contribute over $90 saving in marketing expense.
 
 # FINANCIAL PRODUCT ANALYSIS
 
-1. What is the typical loan amount granted based on income and credit score?
+**1. What is the typical loan amount granted based on income and credit score?**
 
 - Creating Groups Based on Income Brackets and Credit Score Tiers
 
@@ -689,7 +725,7 @@ Key insights and interpretations regarding loan amounts based on income brackets
 •	**Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
 
 
-2. How does spending behaviour (spending score) relate to income and creditworthiness?
+**2. How does spending behaviour (spending score) relate to income and creditworthiness?**
 
 	import pandas as pd
 	from sklearn.linear_model import LinearRegression
