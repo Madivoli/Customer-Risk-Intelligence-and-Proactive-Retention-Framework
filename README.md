@@ -479,6 +479,51 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 1. Can we segment customers into groups (e.g., "high-value low-risk," "high-risk," "credit builders") to tailor marketing offers and loan products?
 
+- Segmenting customers based on risk and value using a CASE statement
+
+		SELECT 
+    		Customer_ID,
+    		Income_Bracket,
+    		Credit_Score_Tiers,
+   		CASE 
+			WHEN Credit_Score_Tiers IN ('Good', 'Very Good', 'Excellent') 
+			AND Income_Bracket IN ('$75k-100k', '$100k+') 
+			THEN 'High-Value, Low-Risk'
+        
+        WHEN Credit_Score_Tiers IN ('Fair', 'Poor') 
+             AND Income_Bracket IN ('$75k-100k', '$100k+') 
+             THEN 'High-Value, High-Risk'
+        
+        WHEN Credit_Score_Tiers IN ('Good', 'Very Good', 'Excellent') 
+             AND Income_Bracket IN ('$0-50k', '$50k-75k') 
+             THEN 'Low-Value, Low-Risk'
+        
+        WHEN Credit_Score_Tiers IN ('Fair', 'Poor') 
+             AND Income_Bracket IN ('$0-50k', '$50k-75k') 
+             THEN 'Low-Value, High-Risk'
+
+		ELSE 'Needs Review'
+  		END AS Risk_Value_Segment,
+			Loan_Amount,
+  			Marketing_Spend
+    
+		FROM raw_dataset_cleaned;
+
+	<img width="942" height="450" alt="image" src="https://github.com/user-attachments/assets/c281da94-d4e9-44ca-bad6-26a02d308160" />
+
+**Results:**
+
+The **largest customer segment** is **High-Value, High-Risk**, **with loan amounts of $55,210**. This segment **presents significant revenue potential but requires careful risk management**. The **High-Value, Low-Risk segment** consists of loans with amounts of $21,736. Although this segment is relatively small, it is likely **the most profitable**.
+
+**Recommendations:**
+
+• Prioritise risk management for the large High-Value, High-Risk segment.
+   
+• Develop strategies to migrate customers from high-risk to lower-risk categories.
+   
+• Focus on the "Needs Review" segment, as this represents an opportunity for better classification.
+   
+• Protect and grow the High-Value, Low-Risk segment through premium services and retention strategies
 
 
 2. How does marketing spend correlate with purchase frequency or new loan uptake? Is the marketing budget being spent effectively?
