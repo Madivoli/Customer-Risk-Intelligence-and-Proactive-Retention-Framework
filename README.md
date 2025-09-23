@@ -325,7 +325,7 @@ Additionally, **income level is a strong predictor of default risk**. Furthermor
         ORDER BY 2 DESC
         LIMIT 3; 
 
-<img width="941" height="612" alt="image" src="https://github.com/user-attachments/assets/f8e0b1f4-fad8-4264-b2e5-49fe3cf1600d" />
+<img width="947" height="452" alt="image" src="https://github.com/user-attachments/assets/2310374a-49ee-4b62-94fa-ee1bbbc989bb" />
 
 # Results
 
@@ -347,9 +347,11 @@ o **18-25:** 26
         GROUP BY  Gender
         ORDER BY 2 DESC; 
 
+<img width="947" height="452" alt="image" src="https://github.com/user-attachments/assets/bd969cd6-3617-4b42-99ff-f9f3f0272506" />
+
 # Results
 
-The top churner by gender:
+The top churners by gender:
 
 o **Male:** 77
 
