@@ -81,6 +81,7 @@ The data cleaning process involved the following process
         risk_analysis.to_excel(r"C:\Users\hp\OneDrive\Projects\Victoria Solutions\raw_dataset_week4.xlsx", index=False)
 
 4. Creating a staging table in SQL
+   
         CREATE TABLE raw_dataset_cleaned_backup AS SELECT * FROM raw_dataset_cleaned;
 
 
