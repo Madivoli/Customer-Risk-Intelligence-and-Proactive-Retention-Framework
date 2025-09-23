@@ -85,7 +85,6 @@ The data cleaning process involved the following process
         CREATE TABLE raw_dataset_cleaned_backup AS SELECT * FROM raw_dataset_cleaned;
 
 
-
 # EXPLORATORY DATA ANALYSIS
 
 **1. Summarising key metrics:**
@@ -386,13 +385,15 @@ o **Female:** 50
 
 	<img width="940" height="402" alt="image" src="https://github.com/user-attachments/assets/02bd2fa8-7704-4f0c-b227-637fc7963998" />
 
+**Results:**
+
 The churn rate is **25.40%**, which means that **25% (n = 127) of the customers have left**. Approximately 373 customers remained with the company. 
 
 A churn rate of 25.4% indicates that 1 in 4 customers are leaving, **representing a significant risk to revenue**. 
 
 This level of churn highlights an urgent need for effective retention strategies. 
 
-Common reasons for high churn rates include: **Competitive pressure**, **Poor customer experience**, **Pricing issues**, and **Products or services not meeting customer expectations**
+Common reasons for high churn rates include: **competitive pressure**, **poor customer experience and service**, **pricing issues**, and **products or services not meeting customer expectations**
 
 
 **Recommendations:**
