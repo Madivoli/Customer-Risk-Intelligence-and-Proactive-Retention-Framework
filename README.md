@@ -235,6 +235,9 @@ Step 12. Logistic Regression model with XGBoost Classifier
 	print("XGBoost Classification Report:")
 	print(classification_report(y_test, y_pred_xgb))
 
+<img width="977" height="180" alt="image" src="https://github.com/user-attachments/assets/4268d6e2-e2c8-44ad-a97f-48aecbcb457d" />
+
+
 **Results:** From to the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**. It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**. However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates for class 1.** This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
 
 **3. What are the key factors that correlate with a customer defaulting on a loan?**
