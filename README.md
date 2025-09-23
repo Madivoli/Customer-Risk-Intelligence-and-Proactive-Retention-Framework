@@ -270,7 +270,7 @@ Additionally, **income level is a strong predictor of default risk**. Furthermor
 
 **1. Identifying the top 3 churners by gender and age group**
 
-	<img width="941" height="612" alt="image" src="https://github.com/user-attachments/assets/f8e0b1f4-fad8-4264-b2e5-49fe3cf1600d" />
+<img width="941" height="612" alt="image" src="https://github.com/user-attachments/assets/f8e0b1f4-fad8-4264-b2e5-49fe3cf1600d" />
 
 
 - Creating age bins
