@@ -491,7 +491,7 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 - Creating Groups Based on Income Brackets and Credit Score Tiers
 
-- Income Brackets:
+- Creating Income Brackets/Bins:
   
 		SELECT
     	Income,  
@@ -505,11 +505,13 @@ Customers with **previous defaults are more likely to churn**. This could indica
 	FROM
     	raw_dataset_cleaned;
 
-
+- Adding a column
+  
 	ALTER TABLE raw_dataset_cleaned
 	ADD COLUMN Income_Bracket VARCHAR(10);
 
- 
+ - Updating the column
+   
 	UPDATE raw_dataset_cleaned
 	SET Income_Bracket = CASE
  	WHEN Income >= 0 AND Income <= 50000 THEN '$0-50k'
@@ -519,7 +521,7 @@ Customers with **previous defaults are more likely to churn**. This could indica
         ELSE 'Unknown'
     END;
 
-- Credit Score Tiers
+- Creating credit Score Tiers
 
  		SELECT                
     		Credit_Score,  
@@ -534,8 +536,12 @@ Customers with **previous defaults are more likely to churn**. This could indica
 			FROM
     			raw_dataset_cleaned;
 
+- Adding a column
+  
 			ALTER TABLE raw_dataset_cleaned
 			ADD COLUMN Credit_Score_Tiers VARCHAR(30);
+
+- Updating the column
 
 			UPDATE raw_dataset_cleaned
 			SET Credit_Score_Tiers = CASE
