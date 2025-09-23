@@ -105,7 +105,7 @@ The analysis focused on understanding the dataset's distribution and identifying
     FROM
         raw_dataset_cleaned;
 		
-<img width="940" height="409" alt="image" src="https://github.com/user-attachments/assets/968da501-634c-4fc8-93ee-c9887948ea16" />
+<img width="940" height="364" alt="image" src="https://github.com/user-attachments/assets/abe223ce-d6df-4500-a074-2392dfeff247" />
 
 # Results 
 
