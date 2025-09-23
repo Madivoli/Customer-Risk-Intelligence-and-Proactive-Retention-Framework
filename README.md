@@ -531,21 +531,21 @@ Customers with **previous defaults are more likely to churn**. This could indica
         		WHEN Credit_Score > 800 THEN 'Excellent'
         		ELSE 'Unknown'
     		END AS Credit_Score_Tier
-		FROM
-    		raw_dataset_cleaned;
+			FROM
+    			raw_dataset_cleaned;
 
-		ALTER TABLE raw_dataset_cleaned
-		ADD COLUMN Credit_Score_Tiers VARCHAR(30);
+			ALTER TABLE raw_dataset_cleaned
+			ADD COLUMN Credit_Score_Tiers VARCHAR(30);
 
-		UPDATE raw_dataset_cleaned
-		SET Credit_Score_Tiers = CASE
-   			WHEN Credit_Score >= 0 AND Credit_Score <= 579 THEN 'Poor'
-        	WHEN Credit_Score > 580 AND Credit_Score <= 669 THEN 'Fair'
-        	WHEN Credit_Score > 670 AND Credit_Score <= 739 THEN 'Good'
-        	WHEN Credit_Score > 740 AND Credit_Score <= 799 THEN 'Very Good'
-       	 	WHEN Credit_Score > 800 THEN 'Excellent'
+			UPDATE raw_dataset_cleaned
+			SET Credit_Score_Tiers = CASE
+   				WHEN Credit_Score >= 0 AND Credit_Score <= 579 THEN 'Poor'
+        		WHEN Credit_Score > 580 AND Credit_Score <= 669 THEN 'Fair'
+        		WHEN Credit_Score > 670 AND Credit_Score <= 739 THEN 'Good'
+        		WHEN Credit_Score > 740 AND Credit_Score <= 799 THEN 'Very Good'
+       	 		WHEN Credit_Score > 800 THEN 'Excellent'
         	ELSE 'Unknown'
-    	END;
+    		END;
 
 - Using a CTE to calculate the loan amount based on income brackets and credit score tiers
 
