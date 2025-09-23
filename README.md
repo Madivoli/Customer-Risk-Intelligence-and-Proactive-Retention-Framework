@@ -85,9 +85,9 @@ The data cleaning process involved the following process
 
 
 
-# Exploratory Data Analysis
+# EXPLORATORY DATA ANALYSIS
 
-1. Summarising key metrics:
+**1. Summarising key metrics:**
 
 The analysis focused on understanding the distribution of the dataset and identifying trends.
 
@@ -106,6 +106,7 @@ The analysis focused on understanding the distribution of the dataset and identi
         raw_dataset_cleaned;
         
 # Results 
+
 The Total number of customers was **500**. The company has a small, manageable customer base that can be analysed to identify and fix problems. 
 
 The average income is **$84,398.06**. The customer base is not low-income, indicating that **affordability** is not the core issue.
@@ -129,7 +130,7 @@ Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfactio
 
 # RISK ASSESSMENT & DEFAULT PREDICTION ANALYSIS
 
-1. Identifying the top 3 defaulters:
+**1. Identifying the top 3 defaulters:**
 
         SELECT Customer_ID, SUM(Loan_Amount) AS loan_amount
         FROM raw_dataset_cleaned 
@@ -148,7 +149,7 @@ o **Customer ID 398:** $48,590
 
 o **Customer ID 322:** $48,285
 
-2. Can we build a model to predict the probability of default for a new applicant based on their profile?
+**2. Can we build a model to predict the probability of default for a new applicant based on their profile?**
 
 Step 1. Grouping ages into logical, non-discriminatory bins
 		
@@ -231,7 +232,7 @@ Step 12. Logistic Regression model with XGBoost Classifier
 
 **Results:** From to the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**. It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**. However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates for class 1.** This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
 
-3. What are the key factors that correlate with a customer defaulting on a loan?
+**3. What are the key factors that correlate with a customer defaulting on a loan?**
 
 	<img width="940" height="496" alt="image" src="https://github.com/user-attachments/assets/0ff08546-801a-492f-bccc-4a96dfff4356" />
 
@@ -266,7 +267,7 @@ Additionally, **income level is a strong predictor of default risk**. Furthermor
 
 # CUSTOMER CHURN ANALYSIS 
 
-1. Identifying the top 3 churners by gender and age group
+**1. Identifying the top 3 churners by gender and age group**
 
 	<img width="941" height="612" alt="image" src="https://github.com/user-attachments/assets/f8e0b1f4-fad8-4264-b2e5-49fe3cf1600d" />
 
@@ -346,7 +347,7 @@ o **Male:** 77
 
 o **Female:** 50
 
-2. Why are customers leaving? What patterns distinguish customers who churn from those who stay?
+**2. Why are customers leaving? What patterns distinguish customers who churn from those who stay?**
 
 - Checking the overall churn rate
   
