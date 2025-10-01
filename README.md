@@ -1,4 +1,5 @@
-# CUSTOMER RISK INTELLIGENCE AND PROACTIVE RETENTION FRAMEWORK
+## Customer Risk Intelligence and Proactive Retention Framework
+
 
 # Overview
 
@@ -58,7 +59,9 @@ The analysis is divided into 4 key areas and seeks to answer the following busin
     
     o	Scikit-learn: To build a classification model to predict default using features like Age, Income, Credit Score, and Previous Defaults.
 
-# DATA PROCESSING, CLEANING AND MANIPULATION
+---
+
+# Data Processing, Cleaning and Manipulation
 
 The data cleaning process involved the following process
 
@@ -84,8 +87,9 @@ The data cleaning process involved the following process
    
         CREATE TABLE raw_dataset_cleaned_backup AS SELECT * FROM raw_dataset_cleaned;
 
+---
 
-# EXPLORATORY DATA ANALYSIS
+# Exploratory Data Analysis
 
 **1. Summarising key metrics:**
 
@@ -109,28 +113,29 @@ The analysis focused on understanding the dataset's distribution and identifying
 
 # Results 
 
-The Total number of customers was **500**. The company has a small, manageable customer base that can be analysed to identify and fix problems. 
+- The Total number of customers was **500**. The company has a small, manageable customer base that can be analysed to identify and fix problems. 
 
-The average income is **$84,398.06**. The customer base is not low-income, indicating that **affordability** is not the core issue.
+- The average income is **$84,398.06**. The customer base is not low-income, indicating that **affordability** is not the core issue.
 
-The average loan size is **$28,456.94**. The company is issuing substantial loans.
+- The average loan size is **$28,456.94**. The company is issuing substantial loans.
 
-The loan size is **$14,228,468.00**. This is the total capital exposed to **credit risk**; it is extremely high.
+- The loan size is **$14,228,468.00**. This is the total capital exposed to **credit risk**; it is extremely high.
 
-The total marketing spend is **$5,279,064.00**.	Spending $5.3 million to acquire 500 customers results in a **Customer Acquisition Cost (CAC)** of approximately **$10,558 per customer**, which is **not sustainable**.
+- The total marketing spend is **$5,279,064.00**.	Spending $5.3 million to acquire 500 customers results in a **Customer Acquisition Cost (CAC)** of approximately **$10,558 per customer**, which is **not sustainable**.
 
-Total Revenue is **$27,189,477.00**. Without knowing **the cost of capital**, the significance of this number is meaningless. 
+- Total Revenue is **$27,189,477.00**. Without knowing **the cost of capital**, the significance of this number is meaningless. 
 
-Total defaults	are **95**. The situation is **manageable**, **as only 405 out of 500 customers are servicing their loans**.
+- Total defaults	are **95**. The situation is **manageable**, **as only 405 out of 500 customers are servicing their loans**.
 
-Default rate is	**19%**. An acceptable default rate for lending in Kenya ranges **between 16% and 40%**, meaning the **business is currently performing well in terms of managing its default risk**.
+- Default rate is	**19%**. An acceptable default rate for lending in Kenya ranges **between 16% and 40%**, meaning the **business is currently performing well in terms of managing its default risk**.
 
-Total churn is **127 customers**. Many of the few customers who are not defaulting are still leaving.
+- Total churn is **127 customers**. Many of the few customers who are not defaulting are still leaving.
 
-Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
+- Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
 
+---
 
-# RISK ASSESSMENT & DEFAULT PREDICTION
+# Risk Assessment & Default Prediction
 
 **1. Identifying the top 3 defaulters:**
 
@@ -152,6 +157,8 @@ o **Customer ID 159:** $48,668
 o **Customer ID 398:** $48,590
 
 o **Customer ID 322:** $48,285
+
+
 
 **2. Can we build a model to predict the probability of default for a new applicant based on their profile?**
 
@@ -197,7 +204,10 @@ Step 6. Observing how well our model performs on the EXAM (the testing data)
 	accuracy = model.score(X_test, y_test)
 	print(f"Model Accuracy: {accuracy:.2%}") 
 
-**Results:** Our model's accuracy is 82%, this means that it is correctly predicting whether a customer will default or not 82 times out of 100 on unseen data.
+**Results:** 
+
+- Our model's accuracy is 82%, this means that it is **correctly predicting whether a customer will default or not 82 times out of 100** on unseen data.
+
 
 Step 7. Creating the model with class weights
 	
@@ -211,6 +221,7 @@ Step 8. Retrain the model
 Step 10. Make new predictions
 	
  	y_pred = model.predict(X_test)
+
 
 Step 11. Check the new predictions
 	
@@ -237,7 +248,13 @@ Step 12. Logistic Regression model with XGBoost Classifier
 <img width="977" height="180" alt="image" src="https://github.com/user-attachments/assets/4268d6e2-e2c8-44ad-a97f-48aecbcb457d" />
 
 
-**Results:** From to the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**. It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**. However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates of 25-17% for class 1.** This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
+**Results:** 
+
+- From the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**.
+- It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**.
+- However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates of 25-17% for class 1.**
+- This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
+
 
 **3. What are the key factors that correlate with a customer defaulting on a loan?**
 
@@ -264,16 +281,16 @@ Plot feature importance:
 
 <img width="940" height="496" alt="image" src="https://github.com/user-attachments/assets/0ff08546-801a-492f-bccc-4a96dfff4356" />
 
+
 **Results:**
 
-The age group of **26-35 years (22.6% importance) is the strongest predictor of default risk**. Customers in this category are at the highest risk, which may be due to factors such as **financial instability**, **being new credit users**, or **having lower income levels**. 
+- The age group of **26-35 years (22.6% importance) is the strongest predictor of default risk**. Customers in this category are at the highest risk, which may be due to factors such as **financial instability**, **being new credit users**, or **having lower income levels**. 
+- The **second strongest predictor of default risk is the age group of 66 and older (15.1% importance)**. This may be related to **fixed incomes**, **retirement**, or **healthcare expenses**. 
+- Additionally, **income level is a strong predictor of default risk**. Furthermore, **past behaviour is a reliable indicator of future behaviour**, as expected. 
 
-The **second strongest predictor of default risk is the age group of 66 and older (15.1% importance)**. This may be related to **fixed incomes**, **retirement**, or **healthcare expenses**. 
+---
 
-Additionally, **income level is a strong predictor of default risk**. Furthermore, **past behaviour is a reliable indicator of future behaviour**, as expected. 
-
-
-# CUSTOMER CHURN ANALYSIS 
+# Customer Churn Analysis
 
 **1. Identifying the top 3 churners by gender and age group**
 
@@ -356,6 +373,7 @@ o **Male:** 77
 
 o **Female:** 50
 
+
 **2. Why are customers leaving? What patterns distinguish customers who churn from those who stay?**
 
 - Checking the overall churn rate
@@ -387,18 +405,15 @@ o **Female:** 50
 
 **Results:**
 
-The churn rate is **25.40%**, which means that **25% (n = 127) of the customers have left**. Approximately 373 customers remained with the company. 
-
-A churn rate of 25.4% indicates that 1 in 4 customers are leaving, **representing a significant risk to revenue**. 
-
-This level of churn highlights an urgent need for effective retention strategies. 
-
-Common reasons for high churn rates include: **competitive pressure**, **poor customer experience and service**, **pricing issues**, and **products or services not meeting customer expectations**
+- The churn rate is **25.40%**, which means that **25% (n = 127) of the customers have left**. Approximately 373 customers remained with the company. 
+- A churn rate of 25.4% indicates that 1 in 4 customers are leaving, **representing a significant risk to revenue**. 
+- This level of churn highlights an urgent need for effective retention strategies. 
+- Common reasons for high churn rates include: **competitive pressure**, **poor customer experience and service**, **pricing issues**, and **products or services not meeting customer expectations**
 
 
 **Recommendations:**
 
-1. Investigate primary reasons for churn through:
+**Investigate primary reasons for churn through:**
    
 •	Exit interviews
 
@@ -406,9 +421,10 @@ Common reasons for high churn rates include: **competitive pressure**, **poor cu
 
 •	Usage pattern analysis
 
-2. Develop targeted retention programs for high-risk segments
+**Develop targeted retention programs for high-risk segments**
 
-- Comparing churn rates across various age groups
+
+-- Comparing churn rates across various age groups
   
 		segment_churn = risk_analysis.groupby('Age_Group', observed=True)['Customer_Churn'].mean().sort_values(ascending=False) * 100
 
@@ -436,14 +452,12 @@ Age_Group:
 
 **Results:**
 
-Young customers, particularly those **aged 18 to 25, are the most likely to leave**. This trend can be attributed to several factors, including **financial instability**, **a desire to explore different options**, **a lack of loyalty**, and s**ignificant life transitions such as college or starting their first job**. 
-
-In contrast, t**he most loyal customers tend to be in the age group of 26 to 35 years**. This loyalty is often related to **career stability**, **established banking relationships**, and **family financial responsibilities**. 
-
-Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low churn rate of 21%**. They are **generally more stable in their banking choices**, as **they are less likely to switch providers**and **often adhere to more traditional banking habits**.
+- Young customers, particularly those **aged 18 to 25, are the most likely to leave**. This trend can be attributed to several factors, including **financial instability**, **a desire to explore different options**, **a lack of loyalty**, and s**ignificant life transitions such as college or starting their first job**. 
+- In contrast, t**he most loyal customers tend to be in the age group of 26 to 35 years**. This loyalty is often related to **career stability**, **established banking relationships**, and **family financial responsibilities**. 
+-Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low churn rate of 21%**. They are **generally more stable in their banking choices**, as **they are less likely to switch providers**and **often adhere to more traditional banking habits**.
 
 
-3. Is there a relationship between loan approval amounts, credit score, and customer churn?
+**3. Is there a relationship between loan approval amounts, credit score, and customer churn?**
 
 - Analyzing Churn by Numerical Features (e.g., Income, Loan Amount, Credit Score)
   
@@ -469,27 +483,36 @@ Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low c
 
 **Income vs. Churn**
 
-Customers who churn tend to **have slightly lower median incomes than those who remain**. This suggests that **lower-income customers may be more price-sensitive or financially strained**, making them more likely to seek better offers elsewhere.
+- Customers who churn tend to **have slightly lower median incomes than those who remain**.
+- This suggests that **lower-income customers may be more price-sensitive or financially strained**, making them more likely to seek better offers elsewhere.
 
 **Loan Amount vs. Churn**
 
-Customers with **smaller loan amounts are more likely to churn**. Those with smaller loans **may feel less committed to the relationship** or **are possibly testing the service**.
+- Customers with **smaller loan amounts are more likely to churn**.
+- Those with smaller loans **may feel less committed to the relationship** or **are possibly testing the service**.
 
 **Credit Score vs. Churn**
 
-Customers who churn generally **have significantly lower credit scores**. Customers with lower credit scores **may be dissatisfied with the terms or rates**, or **they might be looking for better offers**that they now qualify for.
+- Customers who churn generally **have significantly lower credit scores**.
+- Customers with lower credit scores **may be dissatisfied with the terms or rates**, or **they might be looking for better offers**that they now qualify for.
 
 **Age vs. Churn**
 
-Younger customers **are more likely to churn compared to older customers**. This may be because **younger customers tend to be less loyal**, are **more inclined to shop around**, or **have changing financial needs**. Age is a significant factor in the probability of churn.
+- Younger customers **are more likely to churn compared to older customers**.
+- This may be because **younger customers tend to be less loyal**, are **more inclined to shop around**, or **have changing financial needs**.
+- Age is a significant factor in the probability of churn.
 
 **Previous Defaults vs. Churn**
 
-Customers with **previous defaults are more likely to churn**. This could indicate **dissatisfaction with service terms**, or it might suggest that **these customers are being "managed out" of the service**.
+- Customers with **previous defaults are more likely to churn**.
+- This could indicate **dissatisfaction with service terms**, or it might suggest that **these customers are being "managed out" of the service**.
 
-# CUSTOMER SEGMENTATION FOR MARKETING 
 
-1. Can we segment customers into groups (e.g., "high-value low-risk," "high-risk," "credit builders") to tailor marketing offers and loan products?
+---
+
+# Customer Segmentation for Marketing
+
+**1. Can we segment customers into groups (e.g., "high-value low-risk," "high-risk," "credit builders") to tailor marketing offers and loan products?**
 
 - Segmenting customers based on risk and value using a CASE statement
 
@@ -525,7 +548,10 @@ Customers with **previous defaults are more likely to churn**. This could indica
 
 **Results:**
 
-The **largest customer segment** is **High-Value, High-Risk**, **with loan amounts of $55,210**. This segment **presents significant revenue potential but requires careful risk management**. The **High-Value, Low-Risk segment** consists of loans with amounts of $21,736. Although this segment is relatively small, it is likely **the most profitable**.
+- The **largest customer segment** is **High-Value, High-Risk**, **with loan amounts of $55,210**.
+- This segment **presents significant revenue potential but requires careful risk management**.
+- The **High-Value, Low-Risk segment** consists of loans with amounts of $21,736.
+- Although this segment is relatively small, it is likely **the most profitable**.
 
 **Recommendations:**
 
@@ -551,18 +577,19 @@ The **largest customer segment** is **High-Value, High-Risk**, **with loan amoun
 <img width="970" height="44" alt="image" src="https://github.com/user-attachments/assets/adc353b0-218d-431a-90dd-6bda21971ce3" />
 
 
-Linear regression model:
+*Linear regression model:*
 
 	Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
 **Results:** 
 
-There is a **negative relationship between marketing spend and purchase frequency**, indicating that as purchase frequency increases, marketing spending decreases. 
-From the coefficient results, each one-unit increase in purchase frequency is associated with a predicted decrease in marketing spend of $10,902. Thus, the **Customer Acquisition Cost (CAC)** decreases with every additional purchase by $22.45.
+- There is a **negative relationship between marketing spend and purchase frequency**, indicating that as purchase frequency increases, marketing spending decreases.
+- From the coefficient results, each one-unit increase in purchase frequency is associated with a predicted decrease in marketing spend of $10,902.
+- Thus, the **Customer Acquisition Cost (CAC)** decreases with every additional purchase by $22.45.
 
 **Practical Example**
 
-Using our model to make marketing spend prediction:
+*Using our model to make marketing spend prediction:*
 
 Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
@@ -576,9 +603,15 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
 		o	Predicted Total Spend = 10,902 - (22.45 * 10) = $10,697.50
 
-**Interpretation:** moving from 5 to 10 purchases results in a **decrease of $92.25 in predicted marketing spend**, which equates to a difference of $10,697.5 compared to $10,789.75. The model clearly demonstrates that **encouraging repeat purchases serves as a powerful strategy for reducing marketing cost**. Each additional purchase a customer makes is projected to contribute over $90 in savings in marketing expenses.
+**Interpretation:** 
 
-# FINANCIAL PRODUCT ANALYSIS
+- Moving from 5 to 10 purchases results in a **decrease of $92.25 in predicted marketing spend**, which equates to a difference of $10,697.5 compared to $10,789.75.
+- The model clearly demonstrates that **encouraging repeat purchases serves as a powerful strategy for reducing marketing cost**.
+- Each additional purchase a customer makes is projected to contribute over $90 in savings in marketing expenses.
+
+---
+
+# Financial Product Analysis
 
 **1. What is the typical loan amount granted based on income and credit score?**
 
@@ -721,19 +754,19 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
 	<img width="940" height="841" alt="image" src="https://github.com/user-attachments/assets/b52b9868-24e2-4cd0-b39f-01cc82885035" />
 
-Key insights and interpretations regarding loan amounts based on income brackets and credit score tiers:
+**Key insights and interpretations regarding loan amounts based on income brackets and credit score tiers:**
 
-•	**Borrowers with very good credit generally receive higher loan amounts across most income brackets**. For example, customers in the $0–50k income bracket received an average loan amount of $29,809.60. 
+- **Borrowers with very good credit generally receive higher loan amounts across most income brackets**. For example, customers in the $0–50k income bracket received an average loan amount of $29,809.60. 
 
-•	**Poor credit borrowers consistently receive lower loan amounts**, regardless of their income level.
+- **Poor credit borrowers consistently receive lower loan amounts**, regardless of their income level.
 
-•	**Higher income does not always correlate with higher loan amounts**. Interestingly, some **lower-income brackets sometimes have higher average loan amounts than higher-income** brackets within the same credit tier.
+- **Higher income does not always correlate with higher loan amounts**. Interestingly, some **lower-income brackets sometimes have higher average loan amounts than higher-income** brackets within the same credit tier.
 
-•	The **$75k–100k income bracket exhibits the most variability in lending patterns** across different credit tiers.
+- The **$75k–100k income bracket exhibits the most variability in lending patterns** across different credit tiers.
 
-•	**Data Quality Issues:** Several entries show minimum values higher than maximum values (e.g., $0–50k/Poor: min 10,688 > max 9,795), indicating potential data errors.
+- **Data Quality Issues:** Several entries show minimum values higher than maximum values (e.g., $0–50k/Poor: min 10,688 > max 9,795), indicating potential data errors.
 
-•	**Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
+- **Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
 
 
 **2. How does spending behaviour (spending score) relate to income and creditworthiness?**
@@ -748,10 +781,14 @@ Key insights and interpretations regarding loan amounts based on income brackets
 
 <img width="880" height="66" alt="image" src="https://github.com/user-attachments/assets/da662135-510f-44f0-a082-d0fc7dff3f93" />
 
-The multiple linear regression (MLR) model is:
+*The multiple linear regression (MLR) model is:*
 
 	Spending Behaviour = 50.1481 + (-4.7341 * Income) + (8.2135 * Credit Score)
 
-A **moderate negative correlation exists between income and spending (borrowing) behaviour**. Thus, for each additional increase in income, customer borrowing behaviour decreases by 4.7341 units, assuming the credit score remains constant. This indicates that **a rise in income does not necessarily lead to an increase in client borrowing**.
+- A **moderate negative correlation exists between income and spending (borrowing) behaviour**.
+- Thus, for each additional increase in income, customer borrowing behaviour decreases by 4.7341 units, assuming the credit score remains constant.
+- This indicates that **a rise in income does not necessarily lead to an increase in client borrowing**.
 
-On the other hand, **a very strong positive relationship exists between credit score and spending behaviour**. The analysis indicates that for every one-unit increase in credit score, customer borrowing behaviour increases by 8.2135 units, provided income remains constant. This suggests that **customers with higher credit scores tend to borrow more, and vice versa**.
+- On the other hand, **a very strong positive relationship exists between credit score and spending behaviour**.
+- The analysis indicates that for every one-unit increase in credit score, customer borrowing behaviour increases by 8.2135 units, provided income remains constant.
+- This suggests that **customers with higher credit scores tend to borrow more, and vice versa**.
