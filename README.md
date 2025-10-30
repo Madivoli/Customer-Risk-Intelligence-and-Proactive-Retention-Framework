@@ -1,3 +1,5 @@
+## Customer Risk Intelligence and Proactive Retention Framework
+
 # Overview
 
 This repository contains 500 records of customers from a financial institution. It includes demographic information (age, gender, income), financial behaviour (spending score, credit score, loan amount), historical risk (previous defaults), marketing engagement (marketing spend), and critical outcomes (customer churn, defaults). 
