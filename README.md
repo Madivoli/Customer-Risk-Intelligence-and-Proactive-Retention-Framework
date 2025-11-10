@@ -1,13 +1,12 @@
 ## Customer Risk Intelligence and Proactive Retention Framework
 
-# Overview
+**Overview**
 
-This repository contains 500 records of customers from a financial institution. It includes demographic information (age, gender, income), financial behaviour (spending score, credit score, loan amount), historical risk (previous defaults), marketing engagement (marketing spend), and critical outcomes (customer churn, defaults). 
+This repository contains 500 records of customers from a financial institution. It includes demographic information (age, gender, income), financial behaviour (spending score, credit score, loan amount), historical risk (previous defaults), marketing engagement (marketing spend), and critical outcomes (customer churn, defaults). **The primary goal is to leverage this data to mitigate risk, improve customer retention, and optimise marketing strategies**.
 
-The primary goal is to leverage this data to mitigate risk, improve customer retention, and optimise marketing strategies.
-
-
-# Analysis and Business Questions
+---
+---
+**Analysis and Business Questions**
 
 The analysis is divided into 4 key areas and seeks to answer the following business questions:
 
@@ -35,16 +34,18 @@ The analysis is divided into 4 key areas and seeks to answer the following busin
 
 	**How does spending behaviour (spending score) relate to income and creditworthiness?**
 
-
-# Methods
+---
+---
+**Methods**
 
 1.	Descriptive Analytics: Summarising key metrics (average loan size, default rate, churn rate). 
 2.	Correlation Analysis: Identifying relationships between variables (e.g., Income vs. Loan Amount, Credit Score vs. Defaulted).
 3.	Predictive Modelling: Using historical data to predict future outcomes (e.g., Logistic Regression to predict Defaulted or Customer Churn). 
 4.	Clustering: Using algorithms like K-Means to segment customers into distinct groups based on multiple characteristics.
 
-
-# Tools and their purpose 
+---
+---
+**Tools and their purpose** 
 
 •	Excel: Initial data exploration, using filters and pivot tables to get a quick sense of distribution (e.g., average income of defaulters vs. non-defaulters).
 
@@ -58,6 +59,7 @@ The analysis is divided into 4 key areas and seeks to answer the following busin
     
     o	Scikit-learn: To build a classification model to predict default using features like Age, Income, Credit Score, and Previous Defaults.
 
+---
 ---
 
 # Data Processing, Cleaning and Manipulation
@@ -87,10 +89,11 @@ The data cleaning process involved the following process
         CREATE TABLE raw_dataset_cleaned_backup AS SELECT * FROM raw_dataset_cleaned;
 
 ---
+---
 
 # Exploratory Data Analysis
 
-**1. Summarising key metrics:**
+**Summarising Key Metrics:**
 
 The analysis focused on understanding the dataset's distribution and identifying trends.
 
@@ -110,7 +113,7 @@ The analysis focused on understanding the dataset's distribution and identifying
 		
 <img width="940" height="364" alt="image" src="https://github.com/user-attachments/assets/abe223ce-d6df-4500-a074-2392dfeff247" />
 
-# Results 
+**Insights:**
 
 - The Total number of customers was **500**. The company has a small, manageable customer base that can be analysed to identify and fix problems. 
 
@@ -133,10 +136,11 @@ The analysis focused on understanding the dataset's distribution and identifying
 - Churn rate % is **25.4**. A high churn rate suggests **poor customer satisfaction** or that successful customers are finding **better options elsewhere**.
 
 ---
+---
 
 # Risk Assessment & Default Prediction
 
-**1. Identifying the top 3 defaulters:**
+**Identifying the top 3 defaulters:**
 
         SELECT Customer_ID, SUM(Loan_Amount) AS loan_amount
         FROM raw_dataset_cleaned 
@@ -147,7 +151,7 @@ The analysis focused on understanding the dataset's distribution and identifying
 		
 <img width="932" height="452" alt="image" src="https://github.com/user-attachments/assets/052eb7dd-e90b-4395-a590-396a1cfb6337" />
 
-# Results
+**Insights:**
 
 The top 3 customers with the highest loan default are:
 
@@ -158,8 +162,9 @@ o **Customer ID 398:** $48,590
 o **Customer ID 322:** $48,285
 
 
+---
 
-**2. Can we build a model to predict the probability of default for a new applicant based on their profile?**
+**Can we build a model to predict the probability of default for a new applicant based on their profile?**
 
 Step 1. Grouping ages into logical, non-discriminatory bins
 		
@@ -203,7 +208,7 @@ Step 6. Observing how well our model performs on the EXAM (the testing data)
 	accuracy = model.score(X_test, y_test)
 	print(f"Model Accuracy: {accuracy:.2%}") 
 
-**Results:** 
+**Insight:** 
 
 - Our model's accuracy is 82%, this means that it is **correctly predicting whether a customer will default or not 82 times out of 100** on unseen data.
 
@@ -247,15 +252,15 @@ Step 12. Logistic Regression model with XGBoost Classifier
 <img width="977" height="180" alt="image" src="https://github.com/user-attachments/assets/4268d6e2-e2c8-44ad-a97f-48aecbcb457d" />
 
 
-**Results:** 
+**Insights:** 
 
 - From the classification report, **the model achieves a 76% accuracy rate in predicting loan defaults**.
 - It demonstrates a strong capability to identify **creditworthy customers**, with a **recall rate of 83-89% for class 0**.
 - However, the model **struggles to accurately predict defaulters**, reflected in its **low precision and recall rates of 25-17% for class 1.**
 - This pattern is quite common in credit risk modelling, as defaults are rare and difficult to predict.
 
-
-**3. What are the key factors that correlate with a customer defaulting on a loan?**
+---
+**What are the key factors that correlate with a customer defaulting on a loan?**
 
 For XGBoost:
 
@@ -281,17 +286,18 @@ Plot feature importance:
 <img width="940" height="496" alt="image" src="https://github.com/user-attachments/assets/0ff08546-801a-492f-bccc-4a96dfff4356" />
 
 
-**Results:**
+**Insights:**
 
 - The age group of **26-35 years (22.6% importance) is the strongest predictor of default risk**. Customers in this category are at the highest risk, which may be due to factors such as **financial instability**, **being new credit users**, or **having lower income levels**. 
 - The **second strongest predictor of default risk is the age group of 66 and older (15.1% importance)**. This may be related to **fixed incomes**, **retirement**, or **healthcare expenses**. 
 - Additionally, **income level is a strong predictor of default risk**. Furthermore, **past behaviour is a reliable indicator of future behaviour**, as expected. 
 
 ---
+---
 
 # Customer Churn Analysis
 
-**1. Identifying the top 3 churners by gender and age group**
+**Identifying the top 3 churners by gender and age group**
 
 - Creating age bins
 
@@ -329,7 +335,7 @@ Plot feature importance:
             ELSE 'Unknown'
 		        END; 
 
-- Top 3 chuners by age group:
+**Establishing Top 3 chuners by age group:**
 
         SELECT 
 	        Age_Group,
@@ -342,7 +348,7 @@ Plot feature importance:
 
 <img width="947" height="452" alt="image" src="https://github.com/user-attachments/assets/2310374a-49ee-4b62-94fa-ee1bbbc989bb" />
 
-# Results
+**Insights:**
 
 The top 3 churners by age group:
 
@@ -352,7 +358,8 @@ o **46-55:** 26
 
 o **18-25:** 26
 
-- Top chuner by gender:
+---
+**Establishing Top churners by gender:**
 
   		SELECT 
 	        Gender,
@@ -364,7 +371,7 @@ o **18-25:** 26
 
 <img width="947" height="452" alt="image" src="https://github.com/user-attachments/assets/bd969cd6-3617-4b42-99ff-f9f3f0272506" />
 
-# Results
+**Insights:**
 
 The top churners by gender:
 
@@ -372,8 +379,8 @@ o **Male:** 77
 
 o **Female:** 50
 
-
-**2. Why are customers leaving? What patterns distinguish customers who churn from those who stay?**
+---
+**Why are customers leaving? What patterns distinguish customers who churn from those who stay?**
 
 - Checking the overall churn rate
   
@@ -402,7 +409,7 @@ o **Female:** 50
 
 	<img width="940" height="402" alt="image" src="https://github.com/user-attachments/assets/02bd2fa8-7704-4f0c-b227-637fc7963998" />
 
-**Results:**
+**Insights:**
 
 - The churn rate is **25.40%**, which means that **25% (n = 127) of the customers have left**. Approximately 373 customers remained with the company. 
 - A churn rate of 25.4% indicates that 1 in 4 customers are leaving, **representing a significant risk to revenue**. 
@@ -412,18 +419,12 @@ o **Female:** 50
 
 **Recommendations:**
 
-**Investigate primary reasons for churn through:**
-   
-•	Exit interviews
+- **Investigate primary reasons for churn through:** a). Exit interviews, b) Customer satisfaction surveys, and c) Usage pattern analysis.
 
-•	Customer satisfaction surveys
+- **Develop targeted retention programs for high-risk segments**
 
-•	Usage pattern analysis
-
-**Develop targeted retention programs for high-risk segments**
-
-
--- Comparing churn rates across various age groups
+---
+**Comparing churn rates across various age groups:**
   
 		segment_churn = risk_analysis.groupby('Age_Group', observed=True)['Customer_Churn'].mean().sort_values(ascending=False) * 100
 
@@ -449,16 +450,16 @@ Age_Group:
 	26-35    17.808219
 	Name: Customer_Churn, dtype: float64
 
-**Results:**
+**Insights:**
 
 - Young customers, particularly those **aged 18 to 25, are the most likely to leave**. This trend can be attributed to several factors, including **financial instability**, **a desire to explore different options**, **a lack of loyalty**, and s**ignificant life transitions such as college or starting their first job**. 
 - In contrast, t**he most loyal customers tend to be in the age group of 26 to 35 years**. This loyalty is often related to **career stability**, **established banking relationships**, and **family financial responsibilities**. 
--Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low churn rate of 21%**. They are **generally more stable in their banking choices**, as **they are less likely to switch providers**and **often adhere to more traditional banking habits**.
+- Meanwhile, **senior citizens**, **aged 66 and above**, have a **relatively low churn rate of 21%**. They are **generally more stable in their banking choices**, as **they are less likely to switch providers**and **often adhere to more traditional banking habits**.
 
+---
+**Is there a relationship between loan approval amounts, credit score, and customer churn?**
 
-**3. Is there a relationship between loan approval amounts, credit score, and customer churn?**
-
-- Analyzing Churn by Numerical Features (e.g., Income, Loan Amount, Credit Score)
+**Analyzing Churn by Numerical Features (e.g., Income, Loan Amount, Credit Score)**
   
 		numerical_features = risk_analysis[['Income', 'Loan_Amount', 'Credit_Score', 'Age', Previous_Defaults']]
 
@@ -480,12 +481,12 @@ Age_Group:
 
 	<img width="940" height="315" alt="image" src="https://github.com/user-attachments/assets/c03854ed-3721-4800-9eae-c142f2565e4d" />
 
-**Income vs. Churn**
+**Income vs. Churn:**
 
 - Customers who churn tend to **have slightly lower median incomes than those who remain**.
 - This suggests that **lower-income customers may be more price-sensitive or financially strained**, making them more likely to seek better offers elsewhere.
 
-**Loan Amount vs. Churn**
+**Loan Amount vs. Churn:**
 
 - Customers with **smaller loan amounts are more likely to churn**.
 - Those with smaller loans **may feel less committed to the relationship** or **are possibly testing the service**.
@@ -508,12 +509,13 @@ Age_Group:
 
 
 ---
+---
 
 # Customer Segmentation for Marketing
 
-**1. Can we segment customers into groups (e.g., "high-value low-risk," "high-risk," "credit builders") to tailor marketing offers and loan products?**
+**Can we segment customers into groups (e.g., "high-value low-risk," "high-risk," "credit builders") to tailor marketing offers and loan products?**
 
-- Segmenting customers based on risk and value using a CASE statement
+**Segmenting customers based on risk and value using a CASE statement:**
 
 		SELECT 
     		Customer_ID,
@@ -545,7 +547,7 @@ Age_Group:
 
 	<img width="942" height="450" alt="image" src="https://github.com/user-attachments/assets/c281da94-d4e9-44ca-bad6-26a02d308160" />
 
-**Results:**
+**Insights:**
 
 - The **largest customer segment** is **High-Value, High-Risk**, **with loan amounts of $55,210**.
 - This segment **presents significant revenue potential but requires careful risk management**.
@@ -562,8 +564,8 @@ Age_Group:
    
 • Protect and grow the High-Value, Low-Risk segment through premium services and retention strategies
 
-
-**2. How does marketing spend correlate with purchase frequency or new loan uptake? Is the marketing budget being spent effectively?**
+---
+**How does marketing spend correlate with purchase frequency or new loan uptake? Is the marketing budget being spent effectively?**
 
 		import pandas as pd
 		from sklearn.linear_model import LinearRegression
@@ -580,7 +582,7 @@ Age_Group:
 
 	Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
-**Results:** 
+**Insights:** 
 
 - There is a **negative relationship between marketing spend and purchase frequency**, indicating that as purchase frequency increases, marketing spending decreases.
 - From the coefficient results, each one-unit increase in purchase frequency is associated with a predicted decrease in marketing spend of $10,902.
@@ -609,10 +611,11 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 - Each additional purchase a customer makes is projected to contribute over $90 in savings in marketing expenses.
 
 ---
+---
 
 # Financial Product Analysis
 
-**1. What is the typical loan amount granted based on income and credit score?**
+**What is the typical loan amount granted based on income and credit score?**
 
 - Creating Groups Based on Income Brackets and Credit Score Tiers
 
@@ -753,7 +756,7 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
 	<img width="940" height="841" alt="image" src="https://github.com/user-attachments/assets/b52b9868-24e2-4cd0-b39f-01cc82885035" />
 
-**Key insights and interpretations regarding loan amounts based on income brackets and credit score tiers:**
+**Key insights and interpretations:**
 
 - **Borrowers with very good credit generally receive higher loan amounts across most income brackets**. For example, customers in the $0–50k income bracket received an average loan amount of $29,809.60. 
 
@@ -767,8 +770,8 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 
 - **Standard Deviation:** Higher standard deviations suggest greater variability in loan amounts within certain groups, particularly in the lower income brackets.
 
-
-**2. How does spending behaviour (spending score) relate to income and creditworthiness?**
+---
+**How does spending behaviour (spending score) relate to income and creditworthiness?**
 
 	import pandas as pd
 	from sklearn.linear_model import LinearRegression
@@ -783,6 +786,8 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
 *The multiple linear regression (MLR) model is:*
 
 	Spending Behaviour = 50.1481 + (-4.7341 * Income) + (8.2135 * Credit Score)
+
+**Interpretation:**
 
 - A **moderate negative correlation exists between income and spending (borrowing) behaviour**.
 - Thus, for each additional increase in income, customer borrowing behaviour decreases by 4.7341 units, assuming the credit score remains constant.
