@@ -168,45 +168,45 @@ o **Customer ID 322:** $48,285
 
 Step 1. Grouping ages into logical, non-discriminatory bins
 		
-  	age_bins = [18, 25, 35, 50, 65, 100]
-	age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
-	risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
+  		age_bins = [18, 25, 35, 50, 65, 100]
+		age_labels = ['18-25', '26-35', '36-50', '51-65', '66+']
+		risk_analysis['Age_Group'] = pd.cut(risk_analysis['Age'], bins=age_bins, labels=age_labels)
 
 Step 2. Training our model to Predict Loan Defaulters
 	
- 	feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
-	X = risk_analysis[feature_columns]
-	y = risk_analysis['Defaulted']
+ 		feature_columns = ['Age_Group', 'Income', 'Credit_Score', 'Loan_Amount', 'Previous_Defaults'] 
+		X = risk_analysis[feature_columns]
+		y = risk_analysis['Defaulted']
 
-	X = pd.get_dummies(X, columns=['Age_Group'], drop_first=True)
+		X = pd.get_dummies(X, columns=['Age_Group'], drop_first=True)
 
-	from sklearn.model_selection import train_test_split
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+		from sklearn.model_selection import train_test_split
+		X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
-	print("Training features shape:", X_train.shape)
-	print("Testing features shape:", X_test.shape)
-	print("Training target shape:", y_train.shape)
-	print("Testing target shape:", y_test.shape)
-	print("\nFirst few rows of X_train:")
-	print(X_train.head())
+		print("Training features shape:", X_train.shape)
+		print("Testing features shape:", X_test.shape)
+		print("Training target shape:", y_train.shape)
+		print("Testing target shape:", y_test.shape)
+		print("\nFirst few rows of X_train:")
+		print(X_train.head())
 
 Step 3. Choosing our model (in this case, a LogisticRegression)
 
-	from sklearn.linear_model import LogisticRegression
+		from sklearn.linear_model import LogisticRegression
 
 Step 4. Creating the model
 
-	model = LogisticRegression(random_state=42, max_iter=1000)
+		model = LogisticRegression(random_state=42, max_iter=1000)
 
 Step 5. Training the model on the STUDY GROUP (the training data)
 
-	model.fit(X_train, y_train)
+		model.fit(X_train, y_train)
 
 Step 6. Observing how well our model performs on the EXAM (the testing data)
 
-	accuracy = model.score(X_test, y_test)
-	print(f"Model Accuracy: {accuracy:.2%}") 
+		accuracy = model.score(X_test, y_test)
+		print(f"Model Accuracy: {accuracy:.2%}") 
 
 **Insight:** 
 
@@ -215,39 +215,39 @@ Step 6. Observing how well our model performs on the EXAM (the testing data)
 
 Step 7. Creating the model with class weights
 	
-	model = LogisticRegression(random_state=42, max_iter=1000, 
-                          class_weight='balanced')  # This tells the model to automatically balance classes
+		model = LogisticRegression(random_state=42, max_iter=1000, 
+                          class_weight='balanced')  
 
 Step 8. Retrain the model
 	
- 	model.fit(X_train, y_train)
+ 		model.fit(X_train, y_train)
 
 Step 10. Make new predictions
 	
- 	y_pred = model.predict(X_test)
+ 		y_pred = model.predict(X_test)
 
 
 Step 11. Check the new predictions
 	
- 	print("New predicted class distribution:")
-	print(pd.Series(y_pred).value_counts())
+ 		print("New predicted class distribution:")
+		print(pd.Series(y_pred).value_counts())
 
 
 Step 12. Logistic Regression model with XGBoost Classifier
 
-	from xgboost import XGBClassifier
+		from xgboost import XGBClassifier
 
-	xgb_model = XGBClassifier(
-    	random_state=42,
-    	scale_pos_weight=(len(y_train) - sum(y_train)) / sum(y_train),  
-    	eval_metric='logloss',
-    	use_label_encoder=False
-		)
-	xgb_model.fit(X_train, y_train)
+		xgb_model = XGBClassifier(
+    		random_state=42,
+    		scale_pos_weight=(len(y_train) - sum(y_train)) / sum(y_train),  
+    		eval_metric='logloss',
+    		use_label_encoder=False
+			)
+		xgb_model.fit(X_train, y_train)
 
-	y_pred_xgb = xgb_model.predict(X_test)
-	print("XGBoost Classification Report:")
-	print(classification_report(y_test, y_pred_xgb))
+		y_pred_xgb = xgb_model.predict(X_test)
+		print("XGBoost Classification Report:")
+		print(classification_report(y_test, y_pred_xgb))
 
 <img width="977" height="180" alt="image" src="https://github.com/user-attachments/assets/4268d6e2-e2c8-44ad-a97f-48aecbcb457d" />
 
@@ -264,22 +264,22 @@ Step 12. Logistic Regression model with XGBoost Classifier
 
 For XGBoost:
 
-	feature_importance = pd.DataFrame({
-    	'feature': X_train.columns,
-    	'importance': xgb_model.feature_importances_
-	}).sort_values('importance', ascending=False)
+		feature_importance = pd.DataFrame({
+    		'feature': X_train.columns,
+    		'importance': xgb_model.feature_importances_
+		}).sort_values('importance', ascending=False)
 
-	print("Top 10 Most Important Features:")
-	print(feature_importance.head(10))
+		print("Top 10 Most Important Features:")
+		print(feature_importance.head(10))
 
-Plot feature importance:
+		Plot feature importance:
 
-	plt.figure(figsize=(10, 6))
-	plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
-	plt.xlabel('Importance')
-	plt.title('Top 10 Features for Predicting Default')
-	plt.tight_layout()
-	plt.show()
+		plt.figure(figsize=(10, 6))
+		plt.barh(feature_importance['feature'][:10], feature_importance['importance'][:10])
+		plt.xlabel('Importance')
+		plt.title('Top 10 Features for Predicting Default')
+		plt.tight_layout()
+		plt.show()
 
 <img width="967" height="180" alt="image" src="https://github.com/user-attachments/assets/dde9016d-62f5-4397-948b-364d53853add" />
 
@@ -407,7 +407,7 @@ o **Female:** 50
 
 		plt.show()
 
-	<img width="940" height="402" alt="image" src="https://github.com/user-attachments/assets/02bd2fa8-7704-4f0c-b227-637fc7963998" />
+<img width="940" height="402" alt="image" src="https://github.com/user-attachments/assets/02bd2fa8-7704-4f0c-b227-637fc7963998" />
 
 **Insights:**
 
@@ -439,7 +439,7 @@ o **Female:** 50
 		plt.tight_layout()
 		plt.show()
 
-	<img width="940" height="560" alt="image" src="https://github.com/user-attachments/assets/75c9b1af-99ae-40a2-8401-be935a179b3f" />
+<img width="940" height="560" alt="image" src="https://github.com/user-attachments/assets/75c9b1af-99ae-40a2-8401-be935a179b3f" />
 
 Age_Group:
 
@@ -477,9 +477,9 @@ Age_Group:
 		plt.tight_layout()
 		plt.show()
 
-	<img width="940" height="313" alt="image" src="https://github.com/user-attachments/assets/45cbb675-1885-4ad2-a2a4-a9844eed0306" />
+<img width="940" height="313" alt="image" src="https://github.com/user-attachments/assets/45cbb675-1885-4ad2-a2a4-a9844eed0306" />
 
-	<img width="940" height="315" alt="image" src="https://github.com/user-attachments/assets/c03854ed-3721-4800-9eae-c142f2565e4d" />
+<img width="940" height="315" alt="image" src="https://github.com/user-attachments/assets/c03854ed-3721-4800-9eae-c142f2565e4d" />
 
 **Income vs. Churn:**
 
@@ -545,7 +545,7 @@ Age_Group:
     
 		FROM raw_dataset_cleaned;
 
-	<img width="942" height="450" alt="image" src="https://github.com/user-attachments/assets/c281da94-d4e9-44ca-bad6-26a02d308160" />
+<img width="942" height="450" alt="image" src="https://github.com/user-attachments/assets/c281da94-d4e9-44ca-bad6-26a02d308160" />
 
 **Insights:**
 
@@ -754,7 +754,7 @@ Predicted Marketing Spend = 10902 + (-22.45 * Purchase Frequency)
         	ELSE 6
     		END;
 
-	<img width="940" height="841" alt="image" src="https://github.com/user-attachments/assets/b52b9868-24e2-4cd0-b39f-01cc82885035" />
+<img width="940" height="841" alt="image" src="https://github.com/user-attachments/assets/b52b9868-24e2-4cd0-b39f-01cc82885035" />
 
 **Key insights and interpretations:**
 
